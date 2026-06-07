@@ -1,0 +1,13 @@
+[Unit]
+Description=Dual Filament Operator Dashboard (port 8881)
+After=network-online.target moonraker-dual-filament.service
+
+[Service]
+Type=simple
+WorkingDirectory=/home/per/Projects/Dual-Filament-System-P1S/web
+ExecStart=/usr/bin/python3 -m http.server 8881 --bind 0.0.0.0
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=default.target

@@ -1,0 +1,16 @@
+[Unit]
+Description=Moonraker API – Dual Filament Loader (port 7126)
+Documentation=https://moonraker.readthedocs.io/
+After=network-online.target klipper-dual-filament.service
+Wants=network-online.target
+
+[Service]
+Type=simple
+WorkingDirectory=/home/per/moonraker
+EnvironmentFile=/home/per/printer_data_dual_filament/systemd/moonraker-dual-filament.env
+ExecStart=/home/per/moonraker-env/bin/python $MOONRAKER_ARGS
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=default.target

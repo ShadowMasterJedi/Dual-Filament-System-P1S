@@ -54,7 +54,14 @@ Automatisk dual-filament feeder system til Bambu P1S med Klipper-styring via FYS
 
 ## Kom i gang
 
-Se [`docs/flash_guide.md`](docs/flash_guide.md) for første skridt.
+1. Flash S6: [`docs/flash_guide.md`](docs/flash_guide.md)
+2. Deploy UI: `bash scripts/setup_mainsail.sh`
+
+| UI | URL |
+|----|-----|
+| Operator dashboard | `http://<pi-ip>:8881/` |
+| Mainsail (S6) | `http://<pi-ip>:8082/` |
+| UR3 + printervælger | `http://<pi-ip>/` → vælg *Dual Filament S6* |
 
 ## Status
 
