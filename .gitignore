@@ -1,0 +1,4 @@
+*.CUR
+*.bak
+*.swp
+__pycache__/
