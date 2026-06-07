@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1500" font-family="Segoe UI, Arial, sans-serif">
+  <defs>
+    <style>
+      .t{font-size:22px;font-weight:700;fill:#111}
+      .s{font-size:13px;fill:#333}
+      .sm{font-size:11px;fill:#555}
+      .ok{fill:#1b5e20;font-weight:700}
+      .bad{fill:#b71c1c;font-weight:700}
+      .pin{fill:#ffc107;stroke:#f57f17}
+      .pe{fill:#eceff1;stroke:#90a4ae}
+      .jon{fill:#2e7d32;stroke:#1b5e20;stroke-width:2}
+      .jbad{fill:#c62828;stroke:#b71c1c;stroke-width:2}
+      .blue{fill:#1565c0;stroke:#0d47a1}
+      .blk{fill:#263238}
+      .cap{fill:#b0bec5;stroke:#78909c}
+    </style>
+  </defs>
+
+  <text x="500" y="32" text-anchor="middle" class="t">Dit S6 v2.1 board - rigtig layout (fra dit foto)</text>
+  <text x="500" y="56" text-anchor="middle" class="s">VIGTIGT: JP6 er 2 kolonner x 4 raekker til VENSTRE for socket - ikke som FYSETC-skemaet</text>
+
+  <!-- Physical layout key -->
+  <rect x="30" y="75" width="940" height="230" fill="#f5f5f5" stroke="#bbb" rx="8"/>
+  <text x="500" y="100" text-anchor="middle" class="s" font-weight="700">Saadan ser ET slot ud paa dit board (set forfra)</text>
+
+  <g transform="translate(60,120)">
+    <!-- PDN-EN left -->
+    <g transform="translate(0,35)">
+      <rect x="0" y="0" width="8" height="8" class="pin"/><rect x="0" y="14" width="8" height="8" class="pin"/>
+      <rect x="-2" y="-2" width="12" height="26" class="jon" rx="2"/>
+      <text x="-8" y="12" text-anchor="end" class="ok" font-size="11">PDN-EN</text>
+      <text x="-8" y="50" text-anchor="end" class="sm">2-pin</text>
+      <text x="-8" y="64" text-anchor="end" class="sm">(venstre)</text>
+    </g>
+
+    <!-- JP6 2x4 -->
+    <g transform="translate(45,15)">
+      <text x="11" y="-4" text-anchor="middle" class="sm" font-weight="700">JP6</text>
+      <text x="11" y="8" text-anchor="middle" class="sm">2 x 4</text>
+      <!-- row 1: pins 8,7 -->
+      <rect x="0" y="14" width="8" height="8" class="pe"/><rect x="14" y="14" width="8" height="8" class="pe"/>
+      <text x="30" y="20" class="sm">8</text><text x="30" y="28" class="sm">7</text>
+      <text x="-2" y="20" class="sm" text-anchor="end">raekke 1</text>
+      <!-- row 2: pins 6,5 -->
+      <rect x="0" y="28" width="8" height="8" class="pe"/><rect x="14" y="28" width="8" height="8" class="pe"/>
+      <text x="30" y="34" class="sm">6</text><text x="30" y="42" class="sm">5</text>
+      <text x="-2" y="34" class="sm" text-anchor="end">raekke 2</text>
+      <!-- row 3: pins 4,3 BTT -->
+      <rect x="0" y="42" width="8" height="8" class="pin"/><rect x="14" y="42" width="8" height="8" class="pin"/>
+      <rect x="-1" y="41" width="25" height="10" class="jon" rx="2"/>
+      <text x="30" y="48" class="ok" font-size="10">4</text><text x="30" y="56" class="ok" font-size="10">3</text>
+      <text x="-2" y="48" class="ok" font-size="10" text-anchor="end">raekke 3</text>
+      <!-- row 4: pins 2,1 -->
+      <rect x="0" y="56" width="8" height="8" class="pe"/><rect x="14" y="56" width="8" height="8" class="pe"/>
+      <text x="30" y="62" class="sm">2</text><text x="30" y="70" class="sm">1</text>
+      <text x="-2" y="62" class="sm" text-anchor="end">raekke 4</text>
+      <text x="11" y="82" text-anchor="middle" class="ok" font-size="10">BTT: jumper KUN raekke 3</text>
+    </g>
+
+    <!-- sockets + cap -->
+    <g transform="translate(100,0)">
+      <rect x="0" y="0" width="130" height="14" class="blue" rx="1"/>
+      <text x="65" y="11" text-anchor="middle" fill="#fff" font-size="9">blaa socket (top)</text>
+      <ellipse cx="65" cy="42" rx="18" ry="24" class="cap"/>
+      <text x="65" y="44" text-anchor="middle" class="sm">100uF</text>
+      <text x="65" y="58" text-anchor="middle" class="sm">35V</text>
+      <rect x="0" y="68" width="130" height="14" class="blk" rx="1"/>
+      <text x="65" y="79" text-anchor="middle" fill="#fff" font-size="9">sort socket (bund)</text>
+    </g>
+    <rect x="250" y="25" width="28" height="55" fill="#fafafa" stroke="#ccc"/>
+    <text x="264" y="58" text-anchor="middle" class="sm" transform="rotate(90 264 58)">motor OUT</text>
+    <text x="150" y="115" text-anchor="middle" class="s">Kondensator er IMELLEM blaa og sort socket</text>
+  </g>
+
+  <!-- E1 WRONG -->
+  <g transform="translate(30,330)">
+    <rect width="460" height="300" fill="#fff8f8" stroke="#e57373" rx="8"/>
+    <text x="230" y="28" text-anchor="middle" class="bad">Dit foto nu - E1-MOT</text>
+    <g transform="translate(30,50)">
+      <rect x="0" y="0" width="8" height="8" class="pin"/><rect x="0" y="14" width="8" height="8" class="pin"/>
+      <rect x="-2" y="-2" width="12" height="26" class="jon" rx="2"/>
+      <g transform="translate(35,0)">
+        <rect x="0" y="0" width="8" height="8" class="pin"/><rect x="14" y="0" width="8" height="8" class="pin"/>
+        <rect x="-1" y="-1" width="25" height="10" class="jbad" rx="2"/>
+        <text x="11" y="22" text-anchor="middle" class="bad" font-size="10">raekke 1 - FORKERT</text>
+        <rect x="0" y="28" width="8" height="8" class="pe"/><rect x="14" y="28" width="8" height="8" class="pe"/>
+        <rect x="0" y="42" width="8" height="8" class="pe"/><rect x="14" y="42" width="8" height="8" class="pe"/>
+        <rect x="0" y="56" width="8" height="8" class="pe"/><rect x="14" y="56" width="8" height="8" class="pe"/>
+      </g>
+      <rect x="90" y="0" width="100" height="12" class="blue"/>
+      <ellipse cx="140" cy="32" rx="14" ry="18" class="cap"/>
+      <rect x="90" y="52" width="100" height="12" class="blk"/>
+    </g>
+    <text x="230" y="130" class="s">PDN-EN: OK (behold jumper)</text>
+    <text x="230" y="152" class="bad">JP6: jumper i raekke 1 - flyt ned til raekke 3</text>
+  </g>
+
+  <!-- E1 CORRECT -->
+  <g transform="translate(510,330)">
+    <rect width="460" height="300" fill="#f1f8e9" stroke="#81c784" rx="8"/>
+    <text x="230" y="28" text-anchor="middle" class="ok">Korrekt - E1-MOT (Feeder 2)</text>
+    <g transform="translate(30,50)">
+      <rect x="0" y="0" width="8" height="8" class="pin"/><rect x="0" y="14" width="8" height="8" class="pin"/>
+      <rect x="-2" y="-2" width="12" height="26" class="jon" rx="2"/>
+      <g transform="translate(35,0)">
+        <rect x="0" y="0" width="8" height="8" class="pe"/><rect x="14" y="0" width="8" height="8" class="pe"/>
+        <rect x="0" y="28" width="8" height="8" class="pe"/><rect x="14" y="28" width="8" height="8" class="pe"/>
+        <rect x="0" y="42" width="8" height="8" class="pin"/><rect x="14" y="42" width="8" height="8" class="pin"/>
+        <rect x="-1" y="41" width="25" height="10" class="jon" rx="2"/>
+        <text x="11" y="38" text-anchor="middle" class="ok" font-size="10">raekke 3 (pin 4+3)</text>
+        <rect x="0" y="56" width="8" height="8" class="pe"/><rect x="14" y="56" width="8" height="8" class="pe"/>
+      </g>
+      <rect x="90" y="0" width="100" height="12" class="blue"/>
+      <rect x="95" y="14" width="90" height="50" fill="none" stroke="#2e7d32" stroke-dasharray="4,3"/>
+      <text x="140" y="42" text-anchor="middle" class="ok" font-size="10">TMC2209</text>
+      <ellipse cx="140" cy="32" rx="14" ry="18" class="cap"/>
+      <rect x="90" y="52" width="100" height="12" class="blk"/>
+    </g>
+    <text x="230" y="130" class="ok">PDN-EN: jumper PAA</text>
+    <text x="230" y="152" class="ok">JP6: KUN raekke 3 (tredje fra top)</text>
+    <text x="230" y="174" class="s">Raekke 1, 2, 4: tomme</text>
+  </g>
+
+  <!-- E0 WRONG -->
+  <g transform="translate(30,650)">
+    <rect width="460" height="320" fill="#fff8f8" stroke="#e57373" rx="8"/>
+    <text x="230" y="28" text-anchor="middle" class="bad">Dit foto nu - E0-MOT</text>
+    <g transform="translate(30,50)">
+      <rect x="0" y="0" width="8" height="8" class="pin"/><rect x="0" y="14" width="8" height="8" class="pin"/>
+      <rect x="-2" y="-2" width="12" height="26" class="jon" rx="2"/>
+      <g transform="translate(35,0)">
+        <rect x="0" y="0" width="8" height="8" class="pin"/><rect x="14" y="0" width="8" height="8" class="pin"/>
+        <rect x="-1" y="-1" width="25" height="10" class="jbad"/>
+        <rect x="0" y="28" width="8" height="8" class="pin"/><rect x="14" y="28" width="8" height="8" class="pin"/>
+        <rect x="-1" y="27" width="25" height="10" class="jbad"/>
+        <rect x="0" y="42" width="8" height="8" class="pin"/><rect x="14" y="42" width="8" height="8" class="pin"/>
+        <rect x="-1" y="41" width="25" height="10" class="jon" rx="2"/>
+        <rect x="0" y="56" width="8" height="8" class="pe"/><rect x="14" y="56" width="8" height="8" class="pe"/>
+        <text x="11" y="78" text-anchor="middle" class="bad" font-size="10">raekke 1+2+3</text>
+      </g>
+      <rect x="90" y="0" width="100" height="12" class="blue"/>
+      <ellipse cx="140" cy="32" rx="14" ry="18" class="cap"/>
+      <rect x="90" y="52" width="100" height="12" class="blk"/>
+    </g>
+    <text x="230" y="130" class="s">Raekke 3 er RIGTIG for BTT - behold den!</text>
+    <text x="230" y="152" class="bad">Fjern jumpere i raekke 1 og 2</text>
+  </g>
+
+  <!-- E0 CORRECT -->
+  <g transform="translate(510,650)">
+    <rect width="460" height="320" fill="#f1f8e9" stroke="#81c784" rx="8"/>
+    <text x="230" y="28" text-anchor="middle" class="ok">Korrekt - E0-MOT (Feeder 1)</text>
+    <g transform="translate(30,50)">
+      <rect x="0" y="0" width="8" height="8" class="pin"/><rect x="0" y="14" width="8" height="8" class="pin"/>
+      <rect x="-2" y="-2" width="12" height="26" class="jon" rx="2"/>
+      <g transform="translate(35,0)">
+        <rect x="0" y="0" width="8" height="8" class="pe"/><rect x="14" y="0" width="8" height="8" class="pe"/>
+        <rect x="0" y="28" width="8" height="8" class="pe"/><rect x="14" y="28" width="8" height="8" class="pe"/>
+        <rect x="0" y="42" width="8" height="8" class="pin"/><rect x="14" y="42" width="8" height="8" class="pin"/>
+        <rect x="-1" y="41" width="25" height="10" class="jon" rx="2"/>
+        <rect x="0" y="56" width="8" height="8" class="pe"/><rect x="14" y="56" width="8" height="8" class="pe"/>
+      </g>
+      <rect x="90" y="0" width="100" height="12" class="blue"/>
+      <rect x="95" y="14" width="90" height="50" fill="none" stroke="#2e7d32" stroke-dasharray="4,3"/>
+      <ellipse cx="140" cy="32" rx="14" ry="18" class="cap"/>
+      <rect x="90" y="52" width="100" height="12" class="blk"/>
+    </g>
+    <text x="230" y="130" class="ok">Samme som E1: PDN-EN PAA + kun JP6 raekke 3</text>
+  </g>
+
+  <!-- Board map -->
+  <rect x="30" y="990" width="940" height="380" fill="#fafafa" stroke="#bbb" rx="8"/>
+  <text x="500" y="1020" text-anchor="middle" class="t" font-size="18">Board-orientering (dit closeup-foto)</text>
+  <text x="500" y="1045" text-anchor="middle" class="s">Top = E2 - Mid = E1 - Ned = E0 - Brug kun E1 + E0</text>
+
+  <g transform="translate(180,1065)">
+    <rect width="640" height="280" fill="#1a1a1a" rx="6"/>
+    <text x="20" y="30" fill="#888" font-size="11">Terminal E2/E1/E0 OUT (top)</text>
+    <rect x="240" y="40" width="180" height="40" fill="#455a64" stroke="#666"/>
+    <text x="330" y="65" text-anchor="middle" fill="#aaa" font-size="12">E2-MOT - fjern alle jumpere</text>
+    <rect x="240" y="88" width="180" height="44" fill="#1565c0" stroke="#4fc3f7" stroke-width="2"/>
+    <text x="330" y="115" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">E1-MOT Feeder 2</text>
+    <rect x="240" y="140" width="180" height="44" fill="#1565c0" stroke="#4fc3f7" stroke-width="2"/>
+    <text x="330" y="167" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">E0-MOT Feeder 1</text>
+    <rect x="240" y="192" width="180" height="36" fill="#455a64"/>
+    <text x="330" y="215" text-anchor="middle" fill="#aaa" font-size="12">Z-MOT</text>
+    <text x="450" y="110" fill="#81c784" font-size="12">PDN-EN + JP6</text>
+    <text x="450" y="128" fill="#81c784" font-size="12">til VENSTRE for</text>
+    <text x="450" y="146" fill="#81c784" font-size="12">hver socket</text>
+    <text x="450" y="175" fill="#ffeb3b" font-size="12" font-weight="700">JP6 raekke 3 = BTT</text>
+  </g>
+
+  <rect x="30" y="1390" width="940" height="90" fill="#fff3e0" stroke="#ffb74d" rx="8"/>
+  <text x="500" y="1420" text-anchor="middle" class="s">Forskellen fra FYSETC-skema: PDN-EN er IKKE under socket - den er til venstre.</text>
+  <text x="500" y="1442" text-anchor="middle" class="s">JP6 er 2x4 (roteret) - BTT pin 3+4 = raekke 3 fra top (IKKE raekke 2).</text>
+  <text x="500" y="1464" text-anchor="middle" class="sm">Se jumper-overlay.html for pile direkte paa dit foto</text>
+</svg>

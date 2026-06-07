@@ -2,8 +2,8 @@
 
 **Projektnavn**: Dual Filament Feeder System til Bambu P1S  
 **Repo**: https://github.com/ShadowMasterJedi/Dual-Filament-System-P1S  
-**Dato**: 7. juni 2026 (opdateret)  
-**Status**: S6 flashet · Klipper kører · UI deployeret – klar til mekanik & kalibrering  
+**Dato**: 7. juni 2026 (opdateret aften)  
+**Status**: S6 flashet · **Begge feedere kører (standalone)** · UI deployeret – klar til kalibrering & mekanik  
 **Sværhedsgrad**: Medium (Mekanik + Klipper opsætning)
 
 ---
@@ -86,10 +86,10 @@ Kalibreringsvariabler i `_FEEDER_VARS`: retract 100 mm, load 350 mm, purge 50 mm
 
 | Komponent | Rolle | Status |
 |-----------|-------|--------|
-| Feeder 1 + Stepper 1 | Aktiv feeder (E0) | ✅ Har – TMC UART mangler montering |
-| Feeder 2 + Stepper 2 | Standby/preload (E1) | ✅ Har – TMC UART mangler montering |
+| Feeder 1 + Stepper 1 | Aktiv feeder (E0) | ✅ Kører – standalone, `dir_pin: PD6` |
+| Feeder 2 + Stepper 2 | Standby/preload (E1) | ✅ Kører – standalone |
 | BTT Filament Sensor | Runout efter Y-splitter (PB10) | ✅ Har – skal testes |
-| FYSETC S6 v2.1 + 2× TMC2209 | Stepper-styring | ✅ Flashet & forbundet |
+| FYSETC S6 v2.1 + 2× BTT TMC2209 V1.3 | Stepper-styring | ✅ Flashet, standalone (VREF) |
 | Raspberry Pi | Klipper + Moonraker + Mainsail | ✅ Kører (linuxrobot) |
 | Y-Splitter (PTFE) | Passiv sammenføjning | 🖨️ Skal printes |
 
@@ -120,12 +120,13 @@ Kalibreringsvariabler i `_FEEDER_VARS`: retract 100 mm, load 350 mm, purge 50 mm
 ### Fase 2 – Klipper Opsætning
 - [x] Klipper + Moonraker + Mainsail på Pi
 - [x] FYSETC S6 v2.1 flashet med Klipper-firmware
-- [x] 2× TMC2209 defineret i `printer.cfg` (E0/E1)
-- [x] `manual_stepper feeder1` + `feeder2` konfigureret
+- [x] `manual_stepper feeder1` + `feeder2` konfigureret (E0/E1)
 - [x] Parallel instans – UR3 bevaret
+- [x] **Standalone-modus** — `[tmc2209]` udkommenteret, VREF-strøm
+- [x] Motortest `TEST_FEEDER1` + `TEST_FEEDER2` OK
 
 ### Fase 3 – Kalibrering
-- [ ] Monter TMC2209 i E0/E1 med UART-jumper (JP1)
+- [ ] Finjuster VREF på begge drivere (~1,0–1,2 V)
 - [ ] Kalibrer `rotation_distance` på Feeder 1
 - [ ] Kalibrer `rotation_distance` på Feeder 2
 - [ ] Test PTFE-routing og Y-splitter flow
@@ -170,6 +171,9 @@ Dual-Filament-System-P1S/
 │   └── fysetc_s6_v21.config
 ├── firmware/                    # (gitignored) klipper.bin
 ├── docs/
+│   ├── standalone_guide.md      # Aktuel driver-opsætning (uden UART)
+│   ├── jumper_guide.md          # Jumper + UART reference
+│   ├── hardware/                # Board-fotos, SVG-tegninger
 │   ├── flash_guide.md
 │   └── calibration.md
 └── delivery_summary.md          # Denne fil
@@ -191,10 +195,11 @@ Dual-Filament-System-P1S/
 
 ## Kendte begrænsninger
 
-1. **TMC UART** – Klipper viser `Unable to read tmc uart` indtil drivere er monteret med JP1-jumper.
-2. **PURGE_NOZZLE** – Purge af P1S hotend sker ikke direkte (ingen extruder på S6); macro feeder kun ekstra filament.
-3. **Port 81** – Kræver root på Linux; dashboard bruger **8881** i stedet.
-4. **P1S integration** – Runout/pause/resume skal kobles til P1S-print (endnu ikke testet fysisk).
+1. **TMC UART** – BTT TMC2209 V1.3 UART fejlede på E0, E1 og E2 (`IFCNT`). Kører **standalone** med VREF. Se `docs/standalone_guide.md`.
+2. **Strøm** – Ingen software `run_current`; justeres på driver-potentiometer.
+3. **PURGE_NOZZLE** – Purge af P1S hotend sker ikke direkte (ingen extruder på S6); macro feeder kun ekstra filament.
+4. **Port 81** – Kræver root på Linux; dashboard bruger **8881** i stedet.
+5. **P1S integration** – Runout/pause/resume skal kobles til P1S-print (endnu ikke testet fysisk).
 
 ---
 
@@ -204,6 +209,9 @@ Dual-Filament-System-P1S/
 - UR3 `printer.cfg` + symlinks bevaret; dual-filament kører som separat systemd-instans
 - Moonraker på port 7126, dashboard 8881, dedikeret Mainsail 8082
 - Hoved-Mainsail (port 80) har printervælger: *UR3 Octopus* + *Dual Filament S6*
+- **UART-fejlsøgning:** Alle jumper-kombinationer testet (række 1–3, kun PDN-EN, E2-slot) — ingen UART-svar fra BTT-drivere
+- **Løsning:** Standalone-modus; alle jumpere AF på E0/E1; `dir_pin: PD6` på feeder1
+- **5V-jumper:** Flyttet til `5V + DC5V` ved 24V PSU
 
 **Genstart alt:**
 ```bash
@@ -216,10 +224,11 @@ bash ~/Projects/Dual-Filament-System-P1S/scripts/setup_mainsail.sh
 
 - Board er **FYSETC S6 v2.1** (STM32F446) – **ikke** BTT SKR Pro/Octopus
 - Feeder 1 = **E0-slot**, Feeder 2 = **E1-slot** – se `hardware/wiring_notes.md`
+- Driver-opsætning: **`docs/standalone_guide.md`** (produktion) · **`docs/jumper_guide.md`** (UART reference)
 - Y-splitter er **passiv** – ingen aktiv selector i V1
 - `_FEEDER_VARS.load_dist` (350 mm) er udgangspunkt – skal måles og kalibreres
 - Mulig V2: 3. stepper som aktiv selector
 
 ---
 
-*Opdateret efter flash, parallel Klipper-opsætning og dashboard/Mainsail-deploy.*
+*Opdateret efter standalone-modus, motortest OK og UART-fejlsøgning afsluttet.*

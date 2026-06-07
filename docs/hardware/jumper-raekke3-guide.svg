@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 920" font-family="Segoe UI, Arial, sans-serif">
+  <defs>
+    <style>
+      .t{font-size:20px;font-weight:700;fill:#111}
+      .s{font-size:13px;fill:#333}
+      .sm{font-size:11px;fill:#555}
+      .ok{fill:#1b5e20;font-weight:700}
+      .bad{fill:#b71c1c;font-weight:700}
+      .pin{fill:#ffc107;stroke:#f57f17;stroke-width:1}
+      .pe{fill:#eceff1;stroke:#90a4ae;stroke-width:1}
+      .jon{fill:#2e7d32;stroke:#1b5e20;stroke-width:2}
+      .blue{fill:#1565c0;stroke:#0d47a1}
+      .blk{fill:#263238;stroke:#000}
+      .arr{stroke:#e65100;stroke-width:3;fill:none;marker-end:url(#ar)}
+    </style>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L6,3 L0,6 Z" fill="#e65100"/>
+    </marker>
+  </defs>
+
+  <text x="360" y="32" text-anchor="middle" class="t">Praecis jumper-placering - dit S6 board (E0 / E1)</text>
+  <text x="360" y="56" text-anchor="middle" class="s">Set forfra - som paa dine fotos (jumper-e0-e1-begge.jpg)</text>
+
+  <!-- One slot -->
+  <rect x="40" y="75" width="640" height="520" fill="#fafafa" stroke="#ccc" rx="10"/>
+  <text x="360" y="100" text-anchor="middle" class="s" font-weight="700">ET driver-slot (E0-MOT eller E1-MOT)</text>
+
+  <g transform="translate(120,120)">
+    <!-- blue header left -->
+    <rect x="0" y="0" width="14" height="200" class="blue"/>
+    <text x="7" y="-8" text-anchor="middle" class="sm">blaa</text>
+    <text x="7" y="220" text-anchor="middle" class="sm">header</text>
+
+    <!-- JP6 2x4 BETWEEN headers - matches user photo -->
+    <g transform="translate(30,20)">
+      <text x="11" y="-6" text-anchor="middle" class="sm" font-weight="700">2 x 4 blok</text>
+      <text x="11" y="6" text-anchor="middle" class="sm">(mellem headers)</text>
+
+      <!-- row 1 top -->
+      <rect x="0" y="14" width="10" height="10" class="pe"/><rect x="16" y="14" width="10" height="10" class="pe"/>
+      <text x="-8" y="22" text-anchor="end" class="sm">raekke 1</text>
+      <text x="-8" y="32" text-anchor="end" class="sm">(top)</text>
+
+      <!-- row 2 -->
+      <rect x="0" y="34" width="10" height="10" class="pe"/><rect x="16" y="34" width="10" height="10" class="pe"/>
+      <text x="-8" y="42" text-anchor="end" class="sm">raekke 2</text>
+
+      <!-- row 3 BTT -->
+      <rect x="0" y="54" width="10" height="10" class="pin"/><rect x="16" y="54" width="10" height="10" class="pin"/>
+      <rect x="-1" y="53" width="28" height="12" class="jon" rx="2"/>
+      <text x="-8" y="62" text-anchor="end" class="ok" font-size="12">raekke 3</text>
+      <text x="40" y="62" class="ok" font-size="11">BTT jumper</text>
+
+      <!-- row 4 bottom of grid -->
+      <rect x="0" y="74" width="10" height="10" class="pe"/><rect x="16" y="74" width="10" height="10" class="pe"/>
+      <text x="-8" y="82" text-anchor="end" class="sm">raekke 4</text>
+      <text x="-8" y="92" text-anchor="end" class="sm">(bund af</text>
+      <text x="-8" y="102" text-anchor="end" class="sm">2x4 blok)</text>
+    </g>
+
+    <!-- black header right -->
+    <rect x="70" y="0" width="14" height="200" class="blk"/>
+    <text x="77" y="-8" text-anchor="middle" class="sm">sort</text>
+    <text x="77" y="220" text-anchor="middle" class="sm">header</text>
+
+    <!-- driver outline -->
+    <rect x="5" y="25" width="74" height="150" fill="none" stroke="#2e7d32" stroke-dasharray="5,4" rx="3"/>
+    <text x="42" y="105" text-anchor="middle" class="ok" font-size="10">TMC2209</text>
+    <text x="42" y="118" text-anchor="middle" class="sm">monteres her</text>
+
+    <!-- PDN-EN separate below grid -->
+    <g transform="translate(30,145)">
+      <rect x="0" y="0" width="10" height="10" class="pin"/><rect x="16" y="0" width="10" height="10" class="pin"/>
+      <rect x="-1" y="-1" width="28" height="12" class="jon" rx="2"/>
+      <text x="11" y="28" text-anchor="middle" class="ok" font-size="11">PDN-EN</text>
+      <text x="11" y="42" text-anchor="middle" class="sm">(separat - UNDER 2x4 blok)</text>
+      <text x="11" y="56" text-anchor="middle" class="sm">ikke det samme som raekke 4!</text>
+    </g>
+
+    <text x="42" y="230" text-anchor="middle" class="s">100uF kondensator sidder ved siden af (som paa foto)</text>
+  </g>
+
+  <!-- Arrow pointing to row 3 -->
+  <path class="arr" d="M 520 195 L 470 195"/>
+  <text x="525" y="188" class="ok" font-size="13">RAEKKE 3</text>
+  <text x="525" y="206" class="s" font-size="11">= 3. par fra top</text>
+  <text x="525" y="222" class="s" font-size="11">i 2x4 blokken</text>
+  <text x="525" y="238" class="s" font-size="11">(talt fra top)</text>
+
+  <!-- Correct config box -->
+  <rect x="40" y="610" width="300" height="280" fill="#f1f8e9" stroke="#81c784" rx="8"/>
+  <text x="190" y="640" text-anchor="middle" class="ok">KORREKT (BTT TMC2209)</text>
+  <text x="60" y="670" class="s">2x4 blok mellem blaa/sort header:</text>
+  <text x="60" y="692" class="s">  raekke 1: tom</text>
+  <text x="60" y="714" class="s">  raekke 2: tom</text>
+  <text x="60" y="736" class="ok">  raekke 3: JUMPER PAA  (begge kolonner)</text>
+  <text x="60" y="758" class="s">  raekke 4: tom</text>
+  <text x="60" y="786" class="ok">PDN-EN (under blok): JUMPER PAA</text>
+  <text x="60" y="812" class="s">= 2 jumpere i alt per slot</text>
+  <text x="60" y="838" class="s">E2: ingen jumpere</text>
+
+  <!-- Wrong common mistakes -->
+  <rect x="380" y="610" width="300" height="280" fill="#fff8f8" stroke="#e57373" rx="8"/>
+  <text x="530" y="640" text-anchor="middle" class="bad">ALMINDELIGE FEJL</text>
+  <text x="400" y="670" class="bad">Kun PDN-EN (mangler raekke 3)</text>
+  <text x="400" y="692" class="bad">Kun raekke 3 (mangler PDN-EN)</text>
+  <text x="400" y="714" class="bad">Jumper i raekke 1 eller 2</text>
+  <text x="400" y="736" class="bad">Blande raekke 4 med PDN-EN</text>
+  <text x="400" y="764" class="s">Raekke 4 er stadig INDE i 2x4</text>
+  <text x="400" y="786" class="s">blokken. PDN-EN er et EGET</text>
+  <text x="400" y="808" class="s">par pins nedenunder med</text>
+  <text x="400" y="830" class="s">egen "PDN-EN" label.</text>
+
+  <text x="360" y="905" text-anchor="middle" class="sm">Aabn i browser: docs/hardware/jumper-raekke3-guide.svg</text>
+</svg>
