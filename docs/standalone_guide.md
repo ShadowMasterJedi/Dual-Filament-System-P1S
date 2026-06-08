@@ -45,9 +45,25 @@ Alle jumpere fjernet på E0/E1 er **korrekt** for standalone.
 
 ## VREF-justering
 
-1. Multimeter: sort på GND, rød på VREF-skruen på driveren
+Måles **direkte på TMC-modulet** (BTT TMC2209), ikke på S6-hovedboardet:
+
+| Probe | Hvor |
+|-------|------|
+| Rød | Midten af potentiometer-skruen på driver-printet |
+| Sort | GND-pin på modulets pin-header |
+
+Driveren kan sidde i socket under måling. 24V kan være tændt — brug lille isoleret skruetrækker.
+
+1. Multimeter på **DC volt** (V⎓)
 2. Start ~**1,0 V**, kør `TEST_FEEDER1` / `TEST_FEEDER2`
 3. Øg langsomt hvis motor er svag; sænk hvis den bliver varm eller brummer
+
+**Kalibreret (juni 2026):**
+
+| Driver | Slot | VREF |
+|--------|------|------|
+| E0 | Feeder 1 | **0,99 V** |
+| E1 | Feeder 2 | **1,01 V** |
 
 ---
 

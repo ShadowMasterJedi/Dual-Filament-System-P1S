@@ -3,7 +3,7 @@
 **Projektnavn**: Dual Filament Feeder System til Bambu P1S  
 **Repo**: https://github.com/ShadowMasterJedi/Dual-Filament-System-P1S  
 **Dato**: 7. juni 2026 (opdateret aften)  
-**Status**: S6 flashet · **Begge feedere kører (standalone)** · UI deployeret – klar til kalibrering & mekanik  
+**Status**: S6 flashet · **Begge feedere kører (standalone)** · VREF kalibreret · UI deployeret – klar til rotation_distance & mekanik  
 **Sværhedsgrad**: Medium (Mekanik + Klipper opsætning)
 
 ---
@@ -89,7 +89,7 @@ Kalibreringsvariabler i `_FEEDER_VARS`: retract 100 mm, load 350 mm, purge 50 mm
 | Feeder 1 + Stepper 1 | Aktiv feeder (E0) | ✅ Kører – standalone, `dir_pin: PD6` |
 | Feeder 2 + Stepper 2 | Standby/preload (E1) | ✅ Kører – standalone |
 | BTT Filament Sensor | Runout efter Y-splitter (PB10) | ✅ Har – skal testes |
-| FYSETC S6 v2.1 + 2× BTT TMC2209 V1.3 | Stepper-styring | ✅ Flashet, standalone (VREF) |
+| FYSETC S6 v2.1 + 2× BTT TMC2209 V1.3 | Stepper-styring | ✅ Flashet, standalone — E0 **0,99 V**, E1 **1,01 V** |
 | Raspberry Pi | Klipper + Moonraker + Mainsail | ✅ Kører (linuxrobot) |
 | Y-Splitter (PTFE) | Passiv sammenføjning | 🖨️ Skal printes |
 
@@ -126,7 +126,7 @@ Kalibreringsvariabler i `_FEEDER_VARS`: retract 100 mm, load 350 mm, purge 50 mm
 - [x] Motortest `TEST_FEEDER1` + `TEST_FEEDER2` OK
 
 ### Fase 3 – Kalibrering
-- [ ] Finjuster VREF på begge drivere (~1,0–1,2 V)
+- [x] VREF kalibreret — E0 **0,99 V**, E1 **1,01 V** (målt på TMC-modulet)
 - [ ] Kalibrer `rotation_distance` på Feeder 1
 - [ ] Kalibrer `rotation_distance` på Feeder 2
 - [ ] Test PTFE-routing og Y-splitter flow
@@ -212,6 +212,7 @@ Dual-Filament-System-P1S/
 - **UART-fejlsøgning:** Alle jumper-kombinationer testet (række 1–3, kun PDN-EN, E2-slot) — ingen UART-svar fra BTT-drivere
 - **Løsning:** Standalone-modus; alle jumpere AF på E0/E1; `dir_pin: PD6` på feeder1
 - **5V-jumper:** Flyttet til `5V + DC5V` ved 24V PSU
+- **VREF kalibreret:** E0 0,99 V, E1 1,01 V (målt på potentiometer vs GND på BTT-drivere)
 
 **Genstart alt:**
 ```bash
@@ -231,4 +232,4 @@ bash ~/Projects/Dual-Filament-System-P1S/scripts/setup_mainsail.sh
 
 ---
 
-*Opdateret efter standalone-modus, motortest OK og UART-fejlsøgning afsluttet.*
+*Opdateret efter VREF-kalibrering (E0 0,99 V / E1 1,01 V), standalone-modus og motortest OK.*
