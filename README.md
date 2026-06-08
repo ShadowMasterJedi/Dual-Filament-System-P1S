@@ -31,7 +31,10 @@ Automatisk dual-filament feeder system til Bambu P1S med Klipper-styring via FYS
 | Y-Splitter (PTFE) | 🖨️ Print selv |
 | Capricorn PTFE 4–5m | 🛒 Køb |
 | PC4-M6/M10 fittings ×10 | 🛒 Køb |
-| BMG/Orbiter feedere ×2 | 🛒 Køb |
+| HANOV BMG-hus ×2 (print) | 🖨️ Print |
+| POLISI gear kit B07L23XRQT ×2 | 🛒 Køb |
+
+Se komplet indkøbsliste: [`docs/feeder_bom.md`](docs/feeder_bom.md)
 
 **Estimeret ekstraomkostning**: 450–850 DKK
 
@@ -46,7 +49,8 @@ Automatisk dual-filament feeder system til Bambu P1S med Klipper-styring via FYS
 │   └── wiring_notes.md      # Tilslutningsguide
 ├── docs/
 │   ├── flash_guide.md       # Flash-vejledning FYSETC S6
-│   └── calibration.md       # E-steps kalibrering
+│   ├── calibration.md       # E-steps kalibrering
+│   └── feeder_bom.md        # Feeder indkøbsliste (POLISI + HANOV)
 ├── scripts/
 │   └── install.sh           # Klipper include-hjælper
 └── delivery_summary.md      # Projekthukommelse / status

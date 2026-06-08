@@ -44,6 +44,8 @@ Fuldt autonomt dual-filament feeder system. Filamentskift sker 100% automatisk u
 | Sensor B (BTT SFS V2.0)            | Motion+runout ved Spool B – X++Y+ porte           | ✅ Har          |
 | Downstream BTT sensor              | Fail-safe efter Y-splitter – Z- port              | ✅ Har          |
 | Y-Splitter (PTFE)                  | Passiv sammenføjning                              | 🖨️ Skal printes |
+| HANOV BMG-hus ×2 (print)           | Selvprintet feeder-chassis                        | 🖨️ Skal printes |
+| POLISI gear kit B07L23XRQT ×2      | BMG dual-drive gears (1,75 mm / 5 mm aksel)      | 🛒 Køb          |
 | FYSETC S6 v2.1 + 2× TMC2209 v1.3  | Styring (E0+E1, standalone, VREF kalibreret)      | ✅ Flashet      |
 | Raspberry Pi                       | Klipper + Fluidd/Mainsail + dashboard             | ✅ Kørende      |
 
@@ -80,6 +82,9 @@ Fuldt autonomt dual-filament feeder system. Filamentskift sker 100% automatisk u
 - [ ] Mål PTFE-distancer → kalibrer `load_dist` / `retract_dist`
 - [ ] Kalibrer `rotation_distance` på begge feedere
 - [ ] Print Y-splitter + mounts
+- [ ] Print 2× HANOV BMG-hus
+- [ ] Køb 2× POLISI gear kit (B07L23XRQT) — se `docs/feeder_bom.md`
+- [ ] Montér feedere + kalibrer rotation_distance
 - [ ] Vælg notifikationskanal
 
 ---
@@ -89,3 +94,4 @@ Fuldt autonomt dual-filament feeder system. Filamentskift sker 100% automatisk u
 - **7. juni 2026**: Projekt oprettet, repo bygget, S6 flashet, UART standalone accepteret
 - **8. juni 2026 (tidlig)**: To BTT SFS V2.0 per-spool sensorer tilføjet til arkitekturen
 - **8. juni 2026 (sen)**: Komplet port-mapping defineret for alle 5 sensorer + config + wiring guide klar til GitHub push
+- **8. juni 2026**: Feeder BOM valgt — POLISI B07L23XRQT gear kit + HANOV BMG-printet hus
