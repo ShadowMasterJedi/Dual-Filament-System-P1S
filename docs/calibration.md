@@ -1,4 +1,15 @@
-# Kalibrering – rotation_distance & Afstande
+# Kalibrering – VREF, rotation_distance & Afstande
+
+## VREF (strøm på driver)
+
+Måles på **selve TMC-modulet** — rød probe på potentiometer-skruen, sort på GND-pin.
+
+| Driver | Slot | VREF (kalibreret) |
+|--------|------|-------------------|
+| E0 / Feeder 1 | E0 | **0,99 V** |
+| E1 / Feeder 2 | E1 | **1,01 V** |
+
+Målområde: **1,0–1,2 V**. Finjuster kun hvis motor er svag, varm eller brummer efter test.
 
 ## E-steps (rotation_distance)
 

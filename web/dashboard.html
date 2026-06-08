@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dual Filament Loader – P1S</title>
+  <link rel="stylesheet" href="dashboard.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <span class="brand-icon">⬡</span>
+      <div>
+        <h1>Dual Filament Loader</h1>
+        <p class="subtitle">FYSETC S6 v2.1 · Bambu P1S</p>
+      </div>
+    </div>
+    <div class="topbar-actions">
+      <div id="conn-pill" class="pill pill-offline">Offline</div>
+      <a class="btn btn-ghost" id="mainsail-link" href="#">Mainsail</a>
+    </div>
+  </header>
+
+  <main class="layout">
+    <section class="panel status-panel">
+      <h2>Systemstatus</h2>
+      <div class="status-grid">
+        <div class="stat-card">
+          <span class="stat-label">Klipper</span>
+          <span id="klipper-state" class="stat-value">—</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-label">MCU</span>
+          <span id="mcu-state" class="stat-value">—</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-label">Filament sensor</span>
+          <span id="sensor-state" class="stat-value">—</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-label">Aktiv spool</span>
+          <span id="active-spool" class="stat-value">Spool A</span>
+        </div>
+      </div>
+
+      <div class="flow-diagram">
+        <div class="flow-node active" id="node-a">
+          <strong>Spool A</strong>
+          <small>Feeder 1 · E0</small>
+        </div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-node">
+          <strong>Y-Splitter</strong>
+          <small>Passiv</small>
+        </div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-node" id="node-sensor">
+          <strong>BTT Sensor</strong>
+          <small id="sensor-pin">PB10</small>
+        </div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-node">
+          <strong>P1S</strong>
+          <small>Hotend</small>
+        </div>
+        <div class="flow-branch">
+          <div class="flow-node standby" id="node-b">
+            <strong>Spool B</strong>
+            <small>Feeder 2 · E1 · standby</small>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel controls-panel">
+      <h2>Drift</h2>
+      <div class="btn-group">
+        <button class="btn btn-primary" data-macro="PRELOAD_B">Preload Spool B</button>
+        <button class="btn" data-macro="SYSTEM_STATUS">Opdater status</button>
+        <button class="btn btn-warn" data-macro="SIMULATE_RUNOUT">Simuler runout</button>
+      </div>
+
+      <h3>Feeder 1 – Spool A</h3>
+      <div class="btn-group">
+        <button class="btn" data-macro="TEST_FEEDER1">Test 50 mm</button>
+        <button class="btn" data-macro="FEEDER1_JOG DIST=10">Jog +10 mm</button>
+        <button class="btn" data-macro="RETRACT_FEEDER1">Retract</button>
+      </div>
+
+      <h3>Feeder 2 – Spool B</h3>
+      <div class="btn-group">
+        <button class="btn" data-macro="TEST_FEEDER2">Test 50 mm</button>
+        <button class="btn" data-macro="FEEDER2_JOG DIST=10">Jog +10 mm</button>
+        <button class="btn" data-macro="RETRACT_FEEDER2">Retract</button>
+      </div>
+
+      <h3>Nød</h3>
+      <div class="btn-group">
+        <button class="btn btn-danger" data-macro="EMERGENCY_STOP_FEEDERS">Nødstop feedere</button>
+        <button class="btn btn-ghost" data-macro="FIRMWARE_RESTART">Genstart firmware</button>
+      </div>
+    </section>
+
+    <section class="panel vars-panel">
+      <h2>Kalibrering</h2>
+      <dl class="vars-list" id="vars-list">
+        <div><dt>Retract</dt><dd id="var-retract">—</dd></div>
+        <div><dt>Load</dt><dd id="var-load">—</dd></div>
+        <div><dt>Purge</dt><dd id="var-purge">—</dd></div>
+        <div><dt>Purge hastighed</dt><dd id="var-purge-speed">—</dd></div>
+      </dl>
+      <p class="hint">Juster i <code>macros.cfg</code> → <code>_FEEDER_VARS</code></p>
+    </section>
+
+    <section class="panel console-panel">
+      <h2>Konsol</h2>
+      <div id="console" class="console" aria-live="polite"></div>
+      <form id="gcode-form" class="gcode-form">
+        <input id="gcode-input" type="text" placeholder="G-code eller macro..." autocomplete="off">
+        <button class="btn btn-primary" type="submit">Send</button>
+      </form>
+    </section>
+  </main>
+
+  <script src="dashboard.js"></script>
+</body>
+</html>

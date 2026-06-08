@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+  <meta charset="UTF-8">
+  <title>Jumper-guide – dit S6 board (opdateret)</title>
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #111; color: #eee; font-family: system-ui, sans-serif; }
+    h1, h2 { text-align: center; }
+    h1 { padding: 1rem; font-size: 1.2rem; }
+    h2 { font-size: 1rem; color: #aaa; margin-top: 2rem; }
+    .wrap { max-width: 1100px; margin: 0 auto; padding: 0 1rem 2rem; }
+    .note { background: #1e2a1e; border: 1px solid #4caf50; padding: 1rem; border-radius: 8px; margin: 1rem 0; line-height: 1.6; }
+    .warn { background: #2a1e1e; border-color: #f44336; }
+    .info { background: #1a2433; border-color: #42a5f5; }
+    ul { margin: 0.5rem 0; padding-left: 1.2rem; }
+    .ok { color: #81c784; }
+    .bad { color: #ef5350; }
+    img { width: 100%; height: auto; display: block; border-radius: 8px; margin: 1rem 0; }
+    table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.95rem; }
+    th, td { border: 1px solid #444; padding: 0.5rem; text-align: left; }
+    th { background: #222; }
+  </style>
+</head>
+<body>
+  <h1>Jumper-verifikation (nye fotos fra GitHub)</h1>
+  <div class="wrap">
+
+    <div class="note info">
+      <strong>Produktion (juni 2026):</strong> Dual Filament kører <strong>standalone uden UART</strong>.
+      E0/E1: <strong>alle jumpere AF</strong>. Strøm via VREF. Se <code>../standalone_guide.md</code>.
+    </div>
+    <div class="note warn">
+      <strong>UART-reference nedenfor</strong> — BTT TMC2209 UART lykkedes ikke trods omfattende test.
+    </div>
+
+    <h2>1. PDN-EN (under socket)</h2>
+    <img src="jumper-pdn-en-uart.jpg" alt="PDN-EN jumpere">
+
+    <table>
+      <tr><th>Slot</th><th>PDN-EN</th><th>MS-grid</th><th>Status</th></tr>
+      <tr><td>E1</td><td class="ok">På (højre par)</td><td class="ok">Tom</td><td class="ok">OK</td></tr>
+      <tr><td>E0</td><td class="ok">På (højre par)</td><td class="ok">Tom</td><td class="ok">OK</td></tr>
+      <tr><td>Z</td><td class="ok">På</td><td class="ok">Tom</td><td>OK (ikke i brug)</td></tr>
+    </table>
+
+    <h2>2. BTT TMC2209 + UART1 (nederste jumper)</h2>
+    <img src="jumper-btt-drivers-e0-e1.jpg" alt="BTT drivere E0 E1">
+
+    <table>
+      <tr><th>Slot</th><th>Driver</th><th>UART1 (nederste par)</th><th>Status</th></tr>
+      <tr><td>E1</td><td class="ok">BTT TMC2209 V1.3</td><td class="ok">På</td><td class="ok">OK</td></tr>
+      <tr><td>E0</td><td class="ok">BTT TMC2209 V1.3</td><td class="ok">På</td><td class="ok">OK</td></tr>
+    </table>
+
+    <div class="note warn">
+      <strong>UART virker stadig ikke i Klipper?</strong> Jumpere ser korrekte ud på foto.
+      Tjek disse punkter som <em>ikke</em> kan ses på billederne:
+      <ul>
+        <li><strong>PDN-EN</strong> stadig PÅ under driver-modulerne</li>
+        <li><strong>Lodbro J3</strong> på underside af BTT-driver: PDN → <strong>pin 4</strong></li>
+        <li><strong>24V</strong> til board ved motortest</li>
+      </ul>
+    </div>
+
+    <div class="note">
+      <strong class="ok">Korrekt opsætning E0 + E1:</strong>
+      <ul>
+        <li class="ok">PDN-EN: jumper PÅ (højre par under socket)</li>
+        <li class="ok">UART1: jumper i nederste række (venstre kolonne)</li>
+        <li class="ok">MS-grid mellem headers: tom</li>
+        <li class="ok">BTT TMC2209 monteret, varmesink op</li>
+      </ul>
+    </div>
+  </div>
+</body>
+</html>

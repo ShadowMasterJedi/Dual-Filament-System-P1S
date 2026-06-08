@@ -1,3 +1,5 @@
+firmware/
+docs/fysetc-s6-official/
 *.CUR
 *.bak
 *.swp
