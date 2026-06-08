@@ -67,13 +67,16 @@ cat > "${DATA}/systemd/moonraker-dual-filament.env" <<EOF
 MOONRAKER_ARGS="/home/per/moonraker/moonraker/moonraker.py -d /home/per/printer_data_dual_filament"
 EOF
 
+mkdir -p "${HOME}/printer_data/systemd"
+cp "${PROJECT}/deploy/klipper-dual-filament.env" "${HOME}/printer_data/systemd/"
+cp "${PROJECT}/deploy/klipper-dual-filament.service" "${USER_UNIT}/"
 cp "${PROJECT}/deploy/moonraker-dual-filament.service" "${USER_UNIT}/"
 cp "${PROJECT}/deploy/feeder-dashboard.service" "${USER_UNIT}/"
 cp "${PROJECT}/deploy/feeder-mainsail.service" "${USER_UNIT}/"
 
 echo "==> Genstarter services..."
 systemctl --user daemon-reload
-systemctl --user enable moonraker-dual-filament.service feeder-dashboard.service feeder-mainsail.service
+systemctl --user enable klipper-dual-filament.service moonraker-dual-filament.service feeder-dashboard.service feeder-mainsail.service
 systemctl --user restart klipper-dual-filament.service
 systemctl --user restart moonraker-dual-filament.service
 systemctl --user restart feeder-dashboard.service

@@ -20,13 +20,17 @@ TMC2209 orientering: **varmesinke opad**, notch matcher boardets markering.
 | E0-MOT      | NEMA17 #1 (Feeder 1) |
 | E1-MOT      | NEMA17 #2 (Feeder 2) |
 
-## Filament Sensor
+## Filament Sensorer
 
-| BTT Sensor pin | S6 pin         |
-|----------------|----------------|
-| GND            | GND            |
-| VCC            | 5V             |
-| SIGNAL         | PB10 (endstop) |
+5 sensorer (2× BTT SFS V2.0 ved spoler + 1× downstream). Se **`wiring_sensors.md`** for komplet guide.
+
+| Sensor       | S6 port    | Pin     |
+|--------------|------------|---------|
+| A switch     | E2 endstop | `PC15`  |
+| A motion     | Z+ endstop | `PA0`   |
+| B switch     | X+ endstop | `PC14`  |
+| B motion     | Y+ endstop | `PA1`   |
+| Downstream   | Z- endstop | `PB12`  |
 
 ## Strømforsyning
 

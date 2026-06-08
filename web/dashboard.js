@@ -53,7 +53,7 @@
     mcuState.textContent = mcu ? 'Forbundet' : '—';
     mcuState.className = `stat-value ${mcu ? 'ok' : ''}`;
 
-    const sensor = status?.['filament_switch_sensor filament_sensor'];
+    const sensor = status?.['filament_switch_sensor sensor_downstream'];
     if (sensor) {
       const ok = sensor.filament_detected;
       sensorState.textContent = ok ? 'Filament OK' : 'Runout / tom';
@@ -80,7 +80,7 @@
         webhooks: null,
         print_stats: null,
         mcu: ['mcu_version'],
-        'filament_switch_sensor filament_sensor': ['filament_detected', 'enabled'],
+        'filament_switch_sensor sensor_downstream': ['filament_detected', 'enabled'],
         'gcode_macro _FEEDER_VARS': ['retract_dist', 'load_dist', 'purge_mm', 'purge_speed'],
       },
     });

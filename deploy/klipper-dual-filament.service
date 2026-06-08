@@ -1,0 +1,16 @@
+[Unit]
+Description=Klipper Dual Filament System (FYSETC S6 v2.1)
+Documentation=https://www.klipper3d.org/
+After=network-online.target
+Wants=udev.target
+
+[Service]
+Type=simple
+WorkingDirectory=/home/per/klipper
+EnvironmentFile=/home/per/printer_data/systemd/klipper-dual-filament.env
+ExecStart=/home/per/klippy-env/bin/python $KLIPPER_ARGS
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=default.target
