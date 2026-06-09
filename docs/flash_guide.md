@@ -1,9 +1,9 @@
 # Flash Guide – FYSETC S6 v2.1 med Klipper
 
 ## Forudsætninger
-- Raspberry Pi med Klipper (installer via KIAUH)
-- SD-kort formateret som FAT32
-- USB-C kabel
+- Raspberry Pi 3 (`pi3feeder`) med MainsailOS
+- SD-kort formateret som FAT32 (til S6 flash)
+- USB-C kabel (S6 → Pi)
 
 ## Trin 1 – Byg firmware
 
@@ -51,8 +51,19 @@ Indsæt stien i `klipper/printer.cfg` under `[mcu] serial:`.
 
 ## Trin 5 – Deploy config
 
+**På Pi** (efter `git clone` af repo):
+
 ```bash
-cd scripts && bash install.sh
+cd Dual-Filament-System-P1S
+bash scripts/install.sh
 ```
 
-Genstart Klipper i Fluidd/Mainsail.
+**Eller offline fra NUC** (Pi slukket, SD i NUC-læser):
+
+```bash
+sudo bash scripts/deploy_pi_config_offline.sh
+```
+
+Genstart **ikke** Klipper manuelt hvis Pi lige er bootet — vent til Mainsail viser status.
+
+Mainsail: `http://pi3feeder.local/`

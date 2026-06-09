@@ -8,6 +8,9 @@ Automatisk dual-filament feeder system til Bambu P1S med Klipper-styring via FYS
 [Spool A] → [Feeder 1] ─┐
                           ├─ [Y-Splitter] → [BTT Sensor] → [P1S]
 [Spool B] → [Feeder 2] ─┘
+
+Raspberry Pi 3 (pi3feeder)  →  USB  →  FYSETC S6 v2.1
+NUC (linuxrobot)            →  UR3 Octopus (separat Klipper-stack)
 ```
 
 ## Autonom arbejdsgang
@@ -27,7 +30,7 @@ Automatisk dual-filament feeder system til Bambu P1S med Klipper-styring via FYS
 | 2× BTT TMC2209 v1.3 (E0 + E1 slots) | ✅ |
 | 2× NEMA17 steppere | ✅ |
 | BTT Filament Sensor | ✅ |
-| Raspberry Pi 4/5 | ✅ |
+| Raspberry Pi 3 (`pi3feeder`) | ✅ MainsailOS host |
 | Y-Splitter (PTFE) | 🖨️ Print selv |
 | Capricorn PTFE 4–5m | 🛒 Køb |
 | PC4-M6/M10 fittings ×10 | 🛒 Køb |
@@ -42,32 +45,49 @@ Se komplet indkøbsliste: [`docs/feeder_bom.md`](docs/feeder_bom.md)
 
 ```
 ├── klipper/
-│   ├── printer.cfg          # Hoved-konfiguration
-│   ├── macros.cfg           # Alle macros
-│   └── filament_sensor.cfg  # Sensor-konfiguration
+│   ├── printer.cfg          # manual_stepper – Pi host
+│   ├── macros.cfg           # Feeder-macros
+│   └── filament_sensor.cfg  # Runout-sensor
 ├── hardware/
 │   └── wiring_notes.md      # Tilslutningsguide
 ├── docs/
 │   ├── flash_guide.md       # Flash-vejledning FYSETC S6
 │   ├── calibration.md       # E-steps kalibrering
-│   └── feeder_bom.md        # Feeder indkøbsliste (POLISI + HANOV)
+│   └── feeder_bom.md        # Feeder indkøbsliste
 ├── scripts/
-│   └── install.sh           # Klipper include-hjælper
+│   ├── flash_pi_sd.sh       # Flash MainsailOS til Pi SD
+│   ├── setup_pi_host.sh     # Deploy config på Pi
+│   ├── deploy_pi_config_offline.sh  # Deploy via SD i NUC
+│   └── remove_nuc_dual_klipper.sh   # Fjern gammel NUC-stack
 └── delivery_summary.md      # Projekthukommelse / status
 ```
 
-## Kom i gang
+## Kom i gang (Raspberry Pi)
 
 1. Flash S6: [`docs/flash_guide.md`](docs/flash_guide.md)
-2. Deploy UI: `bash scripts/setup_mainsail.sh`
+2. Flash Pi SD (på NUC): `sudo CONFIRM=JA ARCH=armhf bash scripts/flash_pi_sd.sh`
+3. WiFi på SD: `sudo bash scripts/apply_mainsail_wifi.sh`
+4. Config (vælg én):
+   - **På Pi:** `bash scripts/setup_pi_host.sh`
+   - **Offline (SD i NUC):** `sudo bash scripts/deploy_pi_config_offline.sh`
+5. S6 USB → Pi, tænd, vent 3–5 min
 
 | UI | URL |
 |----|-----|
-| Operator dashboard | `http://<pi-ip>:8881/` |
-| Mainsail (S6) | `http://<pi-ip>:8082/` |
-| UR3 + printervælger | `http://<pi-ip>/` → vælg *Dual Filament S6* |
+| Mainsail (Dual Filament) | `http://pi3feeder.local/` |
+| UR3 (NUC) | `http://linuxrobot/` eller `http://192.168.50.119/` |
+
+## NUC – fjern gammel dual-stack
+
+Hvis NUC tidligere kørte parallel Klipper på port 7126:
+
+```bash
+bash scripts/remove_nuc_dual_klipper.sh
+```
+
+UR3 Octopus på port 7125 påvirkes ikke.
 
 ## Status
 
-**Fase**: Klipper opsætning  
+**Fase**: Pi-host kørende (`pi3feeder`, Klipper ready)  
 **Sidst opdateret**: Juni 2026

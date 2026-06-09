@@ -2,8 +2,8 @@
 
 **Projektnavn**: Dual Filament Feeder System til Bambu P1S  
 **Repo**: https://github.com/ShadowMasterJedi/Dual-Filament-System-P1S  
-**Dato**: 8. juni 2026 (opdateret – komplet sensor wiring + config)  
-**Status**: S6 flashet · Feedere kører · VREF kalibreret · Sensor wiring defineret – klar til fysisk montering  
+**Dato**: 9. juni 2026 (Pi-host kørende – NUC dual-stack udfaset)  
+**Status**: S6 flashet · Pi3feeder Klipper ready · Feedere konfigureret  
 **Sværhedsgrad**: Medium
 
 ---
@@ -11,6 +11,17 @@
 ## Projektmål
 
 Fuldt autonomt dual-filament feeder system. Filamentskift sker 100% automatisk uden manuel indgriben.
+
+---
+
+## Host-topologi
+
+| Maskine | Rolle | Klipper | UI |
+|---------|-------|---------|-----|
+| **Raspberry Pi 3** (`pi3feeder`, 192.168.50.14) | Dual Filament host | Moonraker :7125 | `http://pi3feeder.local/` |
+| **NUC** (`linuxrobot`, 192.168.50.119) | UR3 Octopus + SD-flash station | Moonraker :7125 (UR3) | `http://192.168.50.119/` |
+
+S6 board USB-tilsluttet **Pi'en**, ikke NUC'en.
 
 ---
 
@@ -47,7 +58,7 @@ Fuldt autonomt dual-filament feeder system. Filamentskift sker 100% automatisk u
 | HANOV BMG-hus ×2 (print)           | Selvprintet feeder-chassis                        | 🖨️ Skal printes |
 | POLISI gear kit B07L23XRQT ×2      | BMG dual-drive gears (1,75 mm / 5 mm aksel)      | 🛒 Køb          |
 | FYSETC S6 v2.1 + 2× TMC2209 v1.3  | Styring (E0+E1, standalone, VREF kalibreret)      | ✅ Flashet      |
-| Raspberry Pi                       | Klipper + Fluidd/Mainsail + dashboard             | ✅ Kørende      |
+| Raspberry Pi 3 (`pi3feeder`)       | Klipper + MainsailOS host                         | ✅ Kørende      |
 
 ---
 
@@ -55,10 +66,10 @@ Fuldt autonomt dual-filament feeder system. Filamentskift sker 100% automatisk u
 
 | Fil                            | Indhold                                      |
 |-------------------------------|----------------------------------------------|
-| `klipper/filament_sensor.cfg` | Alle 5 sensorer, pins, runout_gcode          |
-| `klipper/macros_sensors.cfg`  | RUNOUT_A/B, SWITCH_TO_B, PRELOAD_B, STATUS   |
-| `klipper/macros.cfg`          | _FEEDER_VARS, PURGE_NOZZLE, test-macros      |
-| `klipper/printer.cfg`         | manual_stepper E0+E1, tmc2209 standalone     |
+| `klipper/filament_sensor.cfg` | Downstream runout-sensor (produktion)        |
+| `klipper/macros_sensors.cfg`  | RUNOUT_A/B, SWITCH_TO_B (fremtidig 5-sensor) |
+| `klipper/macros.cfg`          | MANUAL_STEPPER macros, PURGE, test           |
+| `klipper/printer.cfg`         | manual_stepper feeder1/2, MCU serial         |
 | `hardware/wiring_sensors.md`  | Komplet wiring guide med farver + test-cmds  |
 
 ---
@@ -69,8 +80,8 @@ Fuldt autonomt dual-filament feeder system. Filamentskift sker 100% automatisk u
 - **Steppers**: `[manual_stepper feeder1]` E0 / `[manual_stepper feeder2]` E1
 - **UART**: Standalone (accepteret produktionsvalg)
 - **VREF**: E0 = 0.99V, E1 = 1.01V
-- **Porte**: Moonraker :7126, Dashboard :8881, Mainsail :8082
-- **Pi hostname**: linuxrobot
+- **Pi hostname**: `pi3feeder` (192.168.50.14)
+- **Mainsail**: `http://pi3feeder.local/` (port 7125)
 
 ---
 
@@ -92,6 +103,5 @@ Fuldt autonomt dual-filament feeder system. Filamentskift sker 100% automatisk u
 ## Session-noter
 
 - **7. juni 2026**: Projekt oprettet, repo bygget, S6 flashet, UART standalone accepteret
-- **8. juni 2026 (tidlig)**: To BTT SFS V2.0 per-spool sensorer tilføjet til arkitekturen
-- **8. juni 2026 (sen)**: Komplet port-mapping defineret for alle 5 sensorer + config + wiring guide klar til GitHub push
-- **8. juni 2026**: Feeder BOM valgt — POLISI B07L23XRQT gear kit + HANOV BMG-printet hus
+- **8. juni 2026**: Sensor-arkitektur + config + wiring guide
+- **9. juni 2026**: Pi 3 (`pi3feeder`) MainsailOS host kørende; NUC parallel dual-Klipper udfaset; offline SD-deploy som sikker config-metode

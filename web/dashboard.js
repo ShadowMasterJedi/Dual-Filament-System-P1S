@@ -1,6 +1,8 @@
 (() => {
-  const MR_PORT = '7126';
-  const WS_URL = `${location.protocol === 'https:' ? 'wss' : 'ws'}://${location.hostname}:${MR_PORT}/websocket`;
+  const params = new URLSearchParams(location.search);
+  const MR_HOST = params.get('host') || 'pi3feeder.local';
+  const MR_PORT = params.get('port') || '7125';
+  const WS_URL = `${location.protocol === 'https:' ? 'wss' : 'ws'}://${MR_HOST}:${MR_PORT}/websocket`;
 
   let ws = null;
   let reqId = 1;
@@ -175,8 +177,7 @@
 
   const mainsailLink = $('#mainsail-link');
   if (mainsailLink) {
-    const host = location.hostname;
-    mainsailLink.href = `http://${host}:8082/`;
+    mainsailLink.href = `http://${MR_HOST}/`;
   }
 
   connect();

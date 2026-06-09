@@ -1,30 +1,35 @@
 #!/bin/bash
-# Deploy Klipper config parallelt – overskriver IKKE printer.cfg (UR3)
+# Deploy Klipper config til Raspberry Pi (MainsailOS)
+# Kør på Pi:  bash scripts/install.sh
 set -euo pipefail
 
-DEST="${HOME}/printer_data/config"
-SRC="$(dirname "$0")/../klipper"
+PROJECT="$(cd "$(dirname "$0")/.." && pwd)"
+CONFIG="${HOME}/printer_data/config"
+SRC="${PROJECT}/klipper"
 
-echo "Kopierer dual-filament config til ${DEST} (UR3 printer.cfg bevares)..."
-cp "${SRC}/printer.cfg" "${DEST}/dual_filament_printer.cfg"
-cp "${SRC}/macros.cfg" "${DEST}/dual_filament_macros.cfg"
-cp "${SRC}/macros_sensors.cfg" "${DEST}/dual_filament_macros_sensors.cfg"
-cp "${SRC}/filament_sensor.cfg" "${DEST}/dual_filament_filament_sensor.cfg"
-cp "${SRC}/mainsail.cfg" "${DEST}/dual_filament_mainsail.cfg"
+echo "==> Kopierer config til ${CONFIG}..."
+mkdir -p "${CONFIG}"
+cp "${SRC}/printer.cfg" "${CONFIG}/printer.cfg"
+cp "${SRC}/macros.cfg" "${CONFIG}/macros.cfg"
+cp "${SRC}/filament_sensor.cfg" "${CONFIG}/filament_sensor.cfg"
 
-# Ret includes til parallelle filnavne
-sed -i \
-  -e 's|\[include mainsail.cfg\]|[include dual_filament_mainsail.cfg]|' \
-  -e 's|\[include macros.cfg\]|[include dual_filament_macros.cfg]|' \
-  -e 's|\[include macros_sensors.cfg\]|[include dual_filament_macros_sensors.cfg]|' \
-  -e 's|\[include filament_sensor.cfg\]|[include dual_filament_filament_sensor.cfg]|' \
-  "${DEST}/dual_filament_printer.cfg"
+echo "==> Opdater MCU serial (tilslut S6 via USB først)..."
+SERIAL="$(ls /dev/serial/by-id/usb-Klipper_* 2>/dev/null | head -1 || true)"
+if [ -n "${SERIAL}" ]; then
+    sed -i "s|serial: .*|serial: ${SERIAL}|" "${CONFIG}/printer.cfg"
+    echo "   MCU: ${SERIAL}"
+else
+    echo "   ⚠️  S6 ikke fundet – ret serial manuelt i printer.cfg"
+fi
 
-echo "Faerdig!"
-echo "  dual_filament_printer.cfg"
-echo "  dual_filament_macros.cfg"
-echo "  dual_filament_macros_sensors.cfg"
-echo "  dual_filament_filament_sensor.cfg"
+for f in printer.cfg macros.cfg filament_sensor.cfg; do
+    [ -s "${CONFIG}/${f}" ] || { echo "❌ ${f} er tom!"; exit 1; }
+done
+
+echo "==> Genstarter Klipper..."
+curl -sf -X POST "http://127.0.0.1:7125/printer/firmware_restart" >/dev/null \
+    || sudo systemctl restart klipper
+
 echo ""
-echo "Genstart dual-filament Klipper:"
-echo "  systemctl --user restart klipper-dual-filament"
+echo "✅ Config deployet"
+echo "   Mainsail:  http://$(hostname -I | awk '{print $1}')/"
