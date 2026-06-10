@@ -17,8 +17,17 @@ TMC2209 orientering: **varmesinke opad**, notch matcher boardets markering.
 
 | S6 connector | Tilslut til  |
 |-------------|--------------|
-| E0-MOT      | NEMA17 #1 (Feeder 1) |
-| E1-MOT      | NEMA17 #2 (Feeder 2) |
+| E0-MOT      | Pancake NEMA17 #1 → Redrex Feeder 1 |
+| E1-MOT      | Pancake NEMA17 #2 → Redrex Feeder 2 |
+
+**Hardware:** Redrex Dual Gear extruder + NEMA17 pancake (24 mm aksel, 5 mm D-aksel).
+
+| Emne | Note |
+|------|------|
+| Aksel | 5 mm D-aksel — D-fladen skal flugte med Redrex set screw |
+| Moment | Pancake er svagere end fuld NEMA17 — feeder OK, ikke hotend |
+| VREF | Start 0,85–1,0 V (standalone TMC2209), juster ved slip |
+| Bowden | PC4-M6 fra Redrex → Y-splitter → downstream sensor → P1S |
 
 ## Filament Sensorer
 

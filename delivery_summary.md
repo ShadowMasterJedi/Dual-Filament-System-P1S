@@ -49,14 +49,15 @@ S6 board USB-tilsluttet **Pi'en**, ikke NUC'en.
 
 | Komponent                          | Rolle                                             | Status         |
 |------------------------------------|---------------------------------------------------|----------------|
-| Feeder 1 + Stepper 1               | Aktiv feeder (Spool A)                            | ✅ Har          |
-| Feeder 2 + Stepper 2               | Standby feeder (Spool B)                          | ✅ Har          |
+| Feeder 1 – Redrex Dual Gear        | Aktiv feeder (Spool A) + pancake NEMA17          | ✅ Købt         |
+| Feeder 2 – Redrex Dual Gear        | Standby feeder (Spool B) + pancake NEMA17          | ✅ Købt         |
 | Sensor A (BTT SFS V2.0)            | Motion+runout ved Spool A – E2+Z+ porte           | ✅ Har          |
 | Sensor B (BTT SFS V2.0)            | Motion+runout ved Spool B – X++Y+ porte           | ✅ Har          |
 | Downstream BTT sensor              | Fail-safe efter Y-splitter – Z- port              | ✅ Har          |
-| Y-Splitter (PTFE)                  | Passiv sammenføjning                              | 🖨️ Skal printes |
-| HANOV BMG-hus ×2 (print)           | Selvprintet feeder-chassis                        | 🖨️ Skal printes |
-| POLISI gear kit B07L23XRQT ×2      | BMG dual-drive gears (1,75 mm / 5 mm aksel)      | 🛒 Køb          |
+| Y-Splitter 4-port (print)          | Passiv sammenføjning 2 feedere → P1S              | ✅ Printet      |
+| NEMA17 pancake 24 mm aksel ×2      | Kompakte steppere til Redrex-extrudere              | ✅ Købt         |
+| PC4-M6 bowden fitting              | 4 stk (2× Redrex + reserve)                       | ✅ Har          |
+| PTFE 2,0 mm ID                     | 2× 300 mm (feeder → splitter)                       | ✅ Har          |
 | FYSETC S6 v2.1 + 2× TMC2209 v1.3  | Styring (E0+E1, standalone, VREF kalibreret)      | ✅ Flashet      |
 | Raspberry Pi 3 (`pi3feeder`)       | Klipper + MainsailOS host                         | ✅ Kørende      |
 
@@ -90,12 +91,11 @@ S6 board USB-tilsluttet **Pi'en**, ikke NUC'en.
 - [ ] Fysisk montering af Sensor A og B ved hver spole
 - [ ] Tilslut kabler til S6 (E2, Z+, X+, Y+, Z-)
 - [ ] Test alle 5 sensorer med `SENSOR_STATUS`
+- [ ] Montér Redrex + pancake steppere på S6 E0/E1
+- [ ] Tilslut PTFE: 2× feeder → Y-splitter (port 1+2) → udgang → P1S
 - [ ] Mål PTFE-distancer → kalibrer `load_dist` / `retract_dist`
-- [ ] Kalibrer `rotation_distance` på begge feedere
-- [ ] Print Y-splitter + mounts
-- [ ] Print 2× HANOV BMG-hus
-- [ ] Køb 2× POLISI gear kit (B07L23XRQT) — se `docs/feeder_bom.md`
-- [ ] Montér feedere + kalibrer rotation_distance
+- [ ] Kalibrer `rotation_distance` på begge feedere (`TEST_FEEDER1/2`)
+- [ ] Køb én længere PTFE (splitter → sensor → P1S) — se `docs/feeder_bom.md`
 - [ ] Vælg notifikationskanal
 
 ---
@@ -105,3 +105,4 @@ S6 board USB-tilsluttet **Pi'en**, ikke NUC'en.
 - **7. juni 2026**: Projekt oprettet, repo bygget, S6 flashet, UART standalone accepteret
 - **8. juni 2026**: Sensor-arkitektur + config + wiring guide
 - **9. juni 2026**: Pi 3 (`pi3feeder`) MainsailOS host kørende; NUC parallel dual-Klipper udfaset; offline SD-deploy som sikker config-metode
+- **10. juni 2026**: 2× Redrex + 2× pancake NEMA17 købt; Y-splitter 4-port printet; 4× PC4-M6 + 2× 300 mm PTFE på lager

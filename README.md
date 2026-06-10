@@ -28,18 +28,18 @@ NUC (linuxrobot)            →  UR3 Octopus (separat Klipper-stack)
 |-----------|--------|
 | FYSETC S6 v2.1 | ✅ |
 | 2× BTT TMC2209 v1.3 (E0 + E1 slots) | ✅ |
-| 2× NEMA17 steppere | ✅ |
+| 2× Redrex Dual Gear extruder | ✅ Købt |
+| 2× NEMA17 pancake stepper (24 mm aksel) | ✅ Købt |
+| Y-splitter 4-port (print) | ✅ Printet |
 | BTT Filament Sensor | ✅ |
 | Raspberry Pi 3 (`pi3feeder`) | ✅ MainsailOS host |
-| Y-Splitter (PTFE) | 🖨️ Print selv |
-| Capricorn PTFE 4–5m | 🛒 Køb |
-| PC4-M6/M10 fittings ×10 | 🛒 Køb |
-| HANOV BMG-hus ×2 (print) | 🖨️ Print |
-| POLISI gear kit B07L23XRQT ×2 | 🛒 Køb |
+| PC4-M6 bowden fitting | ✅ 4 stk |
+| PTFE 2× 300 mm (feeder → splitter) | ✅ Har |
+| PTFE splitter → P1S (længere stykke) | 🛒 Køb |
 
 Se komplet indkøbsliste: [`docs/feeder_bom.md`](docs/feeder_bom.md)
 
-**Estimeret ekstraomkostning**: 450–850 DKK
+**Estimeret rest**: ca. 50–100 DKK (primært én længere PTFE)
 
 ## Mappestruktur
 
