@@ -2,7 +2,7 @@
 <html lang="da">
 <head>
   <meta charset="UTF-8">
-  <title>Jumper-guide – dit S6 board (opdateret)</title>
+  <title>Jumper-guide – S6 board (TMC2208 UART)</title>
   <style>
     * { box-sizing: border-box; }
     body { margin: 0; background: #111; color: #eee; font-family: system-ui, sans-serif; }
@@ -23,54 +23,44 @@
   </style>
 </head>
 <body>
-  <h1>Jumper-verifikation (nye fotos fra GitHub)</h1>
+  <h1>Jumper-verifikation — TMC2208 V2 UART (produktion)</h1>
   <div class="wrap">
 
-    <div class="note info">
-      <strong>Produktion (juni 2026):</strong> Dual Filament kører <strong>standalone uden UART</strong>.
-      E0/E1: <strong>alle jumpere AF</strong>. Strøm via VREF. Se <code>../standalone_guide.md</code>.
-    </div>
-    <div class="note warn">
-      <strong>UART-reference nedenfor</strong> — BTT TMC2209 UART lykkedes ikke trods omfattende test.
+    <div class="note">
+      <strong>Produktion (juni 2026):</strong> Dual Filament kører <strong>UART med BTT TMC2208 V2</strong> i E0+E1.
+      <ul>
+        <li class="ok"><strong>PDN-EN: PÅ</strong> (højre par under socket)</li>
+        <li class="ok"><strong>2×4 blok: AF</strong> (tom)</li>
+        <li class="ok">Strøm via Klipper <code>run_current</code> — ikke VREF</li>
+      </ul>
+      Se <code>../tmc2208_uart_test.md</code> og <code>../jumper_guide.md</code>.
     </div>
 
     <h2>1. PDN-EN (under socket)</h2>
     <img src="jumper-pdn-en-uart.jpg" alt="PDN-EN jumpere">
 
     <table>
-      <tr><th>Slot</th><th>PDN-EN</th><th>MS-grid</th><th>Status</th></tr>
-      <tr><td>E1</td><td class="ok">På (højre par)</td><td class="ok">Tom</td><td class="ok">OK</td></tr>
-      <tr><td>E0</td><td class="ok">På (højre par)</td><td class="ok">Tom</td><td class="ok">OK</td></tr>
-      <tr><td>Z</td><td class="ok">På</td><td class="ok">Tom</td><td>OK (ikke i brug)</td></tr>
+      <tr><th>Slot</th><th>PDN-EN</th><th>MS-grid (2×4)</th><th>Driver</th><th>Status</th></tr>
+      <tr><td>E0</td><td class="ok">På</td><td class="ok">Tom</td><td class="ok">BTT TMC2208 V2</td><td class="ok">Produktion</td></tr>
+      <tr><td>E1</td><td class="ok">På</td><td class="ok">Tom</td><td class="ok">BTT TMC2208 V2</td><td class="ok">Produktion</td></tr>
+      <tr><td>E2</td><td>—</td><td>—</td><td>—</td><td>Ikke i brug (sensor endstop)</td></tr>
     </table>
 
-    <h2>2. BTT TMC2209 + UART1 (nederste jumper)</h2>
-    <img src="jumper-btt-drivers-e0-e1.jpg" alt="BTT drivere E0 E1">
+    <h2>2. Drivere E0 + E1</h2>
+    <img src="jumper-btt-drivers-e0-e1.jpg" alt="TMC2208 drivere E0 E1">
 
-    <table>
-      <tr><th>Slot</th><th>Driver</th><th>UART1 (nederste par)</th><th>Status</th></tr>
-      <tr><td>E1</td><td class="ok">BTT TMC2209 V1.3</td><td class="ok">På</td><td class="ok">OK</td></tr>
-      <tr><td>E0</td><td class="ok">BTT TMC2209 V1.3</td><td class="ok">På</td><td class="ok">OK</td></tr>
-    </table>
-
-    <div class="note warn">
-      <strong>UART virker stadig ikke i Klipper?</strong> Jumpere ser korrekte ud på foto.
-      Tjek disse punkter som <em>ikke</em> kan ses på billederne:
+    <div class="note info">
+      <strong>Test i Mainsail:</strong>
       <ul>
-        <li><strong>PDN-EN</strong> stadig PÅ under driver-modulerne</li>
-        <li><strong>Lodbro J3</strong> på underside af BTT-driver: PDN → <strong>pin 4</strong></li>
-        <li><strong>24V</strong> til board ved motortest</li>
+        <li><code>DUMP_TMC STEPPER=feeder1</code></li>
+        <li><code>DUMP_TMC STEPPER=feeder2</code></li>
+        <li><code>TEST_FEEDER1</code> / <code>TEST_FEEDER2</code></li>
       </ul>
     </div>
 
-    <div class="note">
-      <strong class="ok">Korrekt opsætning E0 + E1:</strong>
-      <ul>
-        <li class="ok">PDN-EN: jumper PÅ (højre par under socket)</li>
-        <li class="ok">UART1: jumper i nederste række (venstre kolonne)</li>
-        <li class="ok">MS-grid mellem headers: tom</li>
-        <li class="ok">BTT TMC2209 monteret, varmesink op</li>
-      </ul>
+    <div class="note warn">
+      <strong>Arkiv — TMC2209 V1.3:</strong> UART fejlede med <code>IFCNT</code>-fejl trods jumper-test.
+      Standalone (alle jumpere AF + VREF) var midlertidig løsning — se <code>../standalone_guide.md</code>.
     </div>
   </div>
 </body>

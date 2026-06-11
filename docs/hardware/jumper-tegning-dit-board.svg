@@ -113,7 +113,7 @@
       </g>
       <rect x="90" y="0" width="100" height="12" class="blue"/>
       <rect x="95" y="14" width="90" height="50" fill="none" stroke="#2e7d32" stroke-dasharray="4,3"/>
-      <text x="140" y="42" text-anchor="middle" class="ok" font-size="10">TMC2209</text>
+      <text x="140" y="42" text-anchor="middle" class="ok" font-size="10">TMC2208 V2</text>
       <ellipse cx="140" cy="32" rx="14" ry="18" class="cap"/>
       <rect x="90" y="52" width="100" height="12" class="blk"/>
     </g>

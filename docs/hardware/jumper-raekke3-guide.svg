@@ -66,7 +66,7 @@
 
     <!-- driver outline -->
     <rect x="5" y="25" width="74" height="150" fill="none" stroke="#2e7d32" stroke-dasharray="5,4" rx="3"/>
-    <text x="42" y="105" text-anchor="middle" class="ok" font-size="10">TMC2209</text>
+    <text x="42" y="105" text-anchor="middle" class="ok" font-size="10">TMC2208 V2</text>
     <text x="42" y="118" text-anchor="middle" class="sm">monteres her</text>
 
     <!-- PDN-EN separate below grid -->
@@ -90,7 +90,7 @@
 
   <!-- Correct config box -->
   <rect x="40" y="610" width="300" height="280" fill="#f1f8e9" stroke="#81c784" rx="8"/>
-  <text x="190" y="640" text-anchor="middle" class="ok">KORREKT (BTT TMC2209)</text>
+  <text x="190" y="640" text-anchor="middle" class="ok">KORREKT (BTT TMC2208 V2)</text>
   <text x="60" y="670" class="s">2x4 blok mellem blaa/sort header:</text>
   <text x="60" y="692" class="s">  raekke 1: tom</text>
   <text x="60" y="714" class="s">  raekke 2: tom</text>

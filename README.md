@@ -27,7 +27,7 @@ NUC (linuxrobot)            →  UR3 Octopus (separat Klipper-stack)
 | Komponent | Status |
 |-----------|--------|
 | FYSETC S6 v2.1 | ✅ |
-| 2× BTT TMC2209 v1.3 (E0 + E1 slots) | ✅ |
+| 2× BTT TMC2208 V2 (E0 + E1, UART) | ✅ Produktion |
 | 2× Redrex Dual Gear extruder | ✅ Købt |
 | 2× NEMA17 pancake stepper (24 mm aksel) | ✅ Købt |
 | Y-splitter 4-port (print) | ✅ Printet |
@@ -45,20 +45,23 @@ Se komplet indkøbsliste: [`docs/feeder_bom.md`](docs/feeder_bom.md)
 
 ```
 ├── klipper/
-│   ├── printer.cfg          # manual_stepper – Pi host
+│   ├── printer.cfg          # manual_stepper + tmc2208_uart.cfg
+│   ├── tmc2208_uart.cfg     # UART drivere E0+E1
 │   ├── macros.cfg           # Feeder-macros
 │   └── filament_sensor.cfg  # Runout-sensor
 ├── hardware/
 │   └── wiring_notes.md      # Tilslutningsguide
 ├── docs/
 │   ├── flash_guide.md       # Flash-vejledning FYSETC S6
-│   ├── calibration.md       # E-steps kalibrering
+│   ├── calibration.md       # Strøm + E-steps kalibrering
+│   ├── tmc2208_uart_test.md # UART produktionsguide
+│   ├── jumper_guide.md      # PDN-EN jumpere
 │   └── feeder_bom.md        # Feeder indkøbsliste
 ├── scripts/
 │   ├── flash_pi_sd.sh       # Flash MainsailOS til Pi SD
 │   ├── setup_pi_host.sh     # Deploy config på Pi
 │   ├── deploy_pi_config_offline.sh  # Deploy via SD i NUC
-│   └── remove_nuc_dual_klipper.sh   # Fjern gammel NUC-stack
+│   └── test_tmc2208_uart.sh # UART status-check
 └── delivery_summary.md      # Projekthukommelse / status
 ```
 
@@ -71,11 +74,20 @@ Se komplet indkøbsliste: [`docs/feeder_bom.md`](docs/feeder_bom.md)
    - **På Pi:** `bash scripts/setup_pi_host.sh`
    - **Offline (SD i NUC):** `sudo bash scripts/deploy_pi_config_offline.sh`
 5. S6 USB → Pi, tænd, vent 3–5 min
+6. TMC2208: PDN-EN **PÅ** på E0+E1 — se [`docs/tmc2208_uart_test.md`](docs/tmc2208_uart_test.md)
 
 | UI | URL |
 |----|-----|
 | Mainsail (Dual Filament) | `http://pi3feeder.local/` |
 | UR3 (NUC) | `http://linuxrobot/` eller `http://192.168.50.119/` |
+
+## Motor-test (Mainsail)
+
+```
+DUMP_TMC STEPPER=feeder1
+TEST_FEEDER1
+TEST_FEEDER2
+```
 
 ## NUC – fjern gammel dual-stack
 
@@ -89,5 +101,5 @@ UR3 Octopus på port 7125 påvirkes ikke.
 
 ## Status
 
-**Fase**: Pi-host kørende (`pi3feeder`, Klipper ready)  
-**Sidst opdateret**: Juni 2026
+**Fase**: TMC2208 UART produktion E0+E1 bekræftet (`pi3feeder`, Klipper ready)  
+**Sidst opdateret**: 11. juni 2026

@@ -34,17 +34,18 @@ mkdir -p "${CONFIG}"
 cp "${SRC}/printer.cfg" "${CONFIG}/printer.cfg"
 cp "${SRC}/macros.cfg" "${CONFIG}/macros.cfg"
 cp "${SRC}/filament_sensor.cfg" "${CONFIG}/filament_sensor.cfg"
+cp "${SRC}/tmc2208_uart.cfg" "${CONFIG}/tmc2208_uart.cfg"
 sed -i "s|serial: .*|serial: ${SERIAL}|" "${CONFIG}/printer.cfg"
 rm -f "${CONFIG}/macros_sensors.cfg"
 
 # Kun rigtige filer – ikke symlinks (mainsail.cfg, timelapse.cfg)
-for f in printer.cfg macros.cfg filament_sensor.cfg; do
+for f in printer.cfg macros.cfg filament_sensor.cfg tmc2208_uart.cfg; do
     chown 1000:1000 "${CONFIG}/${f}"
     chmod 644 "${CONFIG}/${f}"
 done
 
 echo "Skrevet:"
-ls -la "${CONFIG}/printer.cfg" "${CONFIG}/macros.cfg" "${CONFIG}/filament_sensor.cfg"
+ls -la "${CONFIG}/printer.cfg" "${CONFIG}/macros.cfg" "${CONFIG}/filament_sensor.cfg" "${CONFIG}/tmc2208_uart.cfg"
 
 sync
 umount "${MOUNT}"

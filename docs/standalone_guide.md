@@ -1,13 +1,19 @@
-# FYSETC S6 v2.1 – Standalone (uden UART)
+# FYSETC S6 v2.1 – Standalone (uden UART) — ARKIV
 
-**Status (juni 2026):** Produktionsopsætning for Dual Filament feedere.  
-BTT TMC2209 V1.3 UART kunne ikke etableres trods omfattende jumper-test — standalone virker stabilt.
+> **Udfaset juni 2026.** Produktion kører nu **TMC2208 V2 UART** — se `tmc2208_uart_test.md` og `jumper_guide.md`.  
+> Behold denne guide kun som fallback hvis UART fejler, eller hvis I midlertidigt skifter tilbage til TMC2209 uden UART.
 
 ---
 
-## Config (Klipper)
+## Historik
 
-`[tmc2209]`-sektionerne er **udkommenteret** i `klipper/printer.cfg`. Kun `[manual_stepper]` bruges:
+BTT TMC2209 V1.3 UART kunne ikke etableres trods omfattende jumper-test (`IFCNT`-fejl). Standalone med VREF var stabil midlertidig løsning indtil **BTT TMC2208 V2** blev testet og bekræftet på E0+E1.
+
+---
+
+## Config (standalone)
+
+Fjern/kommentér `[include tmc2208_uart.cfg]` i `printer.cfg`. Kun `[manual_stepper]` bruges:
 
 | Feeder | Slot | step | dir | enable |
 |--------|------|------|-----|--------|
@@ -20,45 +26,26 @@ Strøm styres via **VREF-potentiometer** på hver driver (~1,0–1,2 V for ~0,7�
 
 ---
 
-## Jumpere (E0 + E1)
+## Jumpere (E0 + E1) — standalone
 
 | Område | Standalone |
 |--------|------------|
 | PDN-EN | **AF** |
 | 2×4 blok mellem headers | **AF** |
 | UART1 / øvrige | **AF** |
-| E2, Z, X, Y | **AF** |
-
-Alle jumpere fjernet på E0/E1 er **korrekt** for standalone.
 
 ---
 
-## Strømforsyning
+## VREF-justering (TMC2209 standalone)
 
-| Forbindelse | Formål |
-|-------------|--------|
-| USB → Pi | Klipper-kommunikation |
-| 24V → Main PWR | Motorstrøm (VMOT) |
-| 5V-jumper | **5V + DC5V** (ikke USB5V+5V) når 24V er til |
-
----
-
-## VREF-justering
-
-Måles **direkte på TMC-modulet** (BTT TMC2209), ikke på S6-hovedboardet:
+Måles **direkte på TMC-modulet**:
 
 | Probe | Hvor |
 |-------|------|
-| Rød | Midten af potentiometer-skruen på driver-printet |
+| Rød | Midten af potentiometer-skruen |
 | Sort | GND-pin på modulets pin-header |
 
-Driveren kan sidde i socket under måling. 24V kan være tændt — brug lille isoleret skruetrækker.
-
-1. Multimeter på **DC volt** (V⎓)
-2. Start ~**1,0 V**, kør `TEST_FEEDER1` / `TEST_FEEDER2`
-3. Øg langsomt hvis motor er svag; sænk hvis den bliver varm eller brummer
-
-**Kalibreret (juni 2026):**
+**Tidligere kalibreret (juni 2026):**
 
 | Driver | Slot | VREF |
 |--------|------|------|
@@ -75,24 +62,11 @@ TEST_FEEDER1
 TEST_FEEDER2
 ```
 
-Forventet: `ready`, ingen TMC/UART-fejl, begge motorer drejer.
-
 ---
 
-## Hvad I mister vs UART
+## Tilbage til UART (anbefalet)
 
-- Software `run_current` i config
-- `DUMP_TMC` / driver-diagnostik
-- Nem strømjustering per materiale uden at åbne boardet
-
-Feeder-funktion, macros og sensor er **uændret**.
-
----
-
-## UART senere (valgfrit)
-
-Se `docs/jumper_guide.md`. Mulige veje:
-
-- FYSETC TMC2209 V3.1 (plug-and-play på S6)
-- Verificer BTT-driver underside: PDN → pin 4
-- Genaktiver `[tmc2209]` med `uart_pin: PA15` (E0) og `PC5` (E1)
+1. Montér **BTT TMC2208 V2** i E0+E1
+2. **PDN-EN PÅ** per slot
+3. Aktivér `[include tmc2208_uart.cfg]` i `printer.cfg`
+4. `FIRMWARE_RESTART` → `DUMP_TMC STEPPER=feeder1`

@@ -2,8 +2,8 @@
 
 **Projektnavn**: Dual Filament Feeder System til Bambu P1S  
 **Repo**: https://github.com/ShadowMasterJedi/Dual-Filament-System-P1S  
-**Dato**: 9. juni 2026 (Pi-host kørende – NUC dual-stack udfaset)  
-**Status**: S6 flashet · Pi3feeder Klipper ready · Feedere konfigureret  
+**Dato**: 11. juni 2026  
+**Status**: S6 flashet · Pi3feeder Klipper ready · TMC2208 UART E0+E1 bekræftet  
 **Sværhedsgrad**: Medium
 
 ---
@@ -58,7 +58,7 @@ S6 board USB-tilsluttet **Pi'en**, ikke NUC'en.
 | NEMA17 pancake 24 mm aksel ×2      | Kompakte steppere til Redrex-extrudere              | ✅ Købt         |
 | PC4-M6 bowden fitting              | 4 stk (2× Redrex + reserve)                       | ✅ Har          |
 | PTFE 2,0 mm ID                     | 2× 300 mm (feeder → splitter)                       | ✅ Har          |
-| FYSETC S6 v2.1 + 2× TMC2209 v1.3  | Styring (E0+E1, standalone, VREF kalibreret)      | ✅ Flashet      |
+| FYSETC S6 v2.1 + 2× TMC2208 V2    | Styring E0+E1, UART, `run_current` 0.65 A         | ✅ Produktion   |
 | Raspberry Pi 3 (`pi3feeder`)       | Klipper + MainsailOS host                         | ✅ Kørende      |
 
 ---
@@ -67,10 +67,12 @@ S6 board USB-tilsluttet **Pi'en**, ikke NUC'en.
 
 | Fil                            | Indhold                                      |
 |-------------------------------|----------------------------------------------|
-| `klipper/filament_sensor.cfg` | Downstream runout-sensor (produktion)        |
-| `klipper/macros_sensors.cfg`  | RUNOUT_A/B, SWITCH_TO_B (fremtidig 5-sensor) |
+| `klipper/printer.cfg`         | manual_stepper feeder1/2 + `[include tmc2208_uart.cfg]` |
+| `klipper/tmc2208_uart.cfg`    | TMC2208 UART E0 (PA15) + E1 (PC5)            |
 | `klipper/macros.cfg`          | MANUAL_STEPPER macros, PURGE, test           |
-| `klipper/printer.cfg`         | manual_stepper feeder1/2, MCU serial         |
+| `klipper/filament_sensor.cfg` | Downstream runout-sensor (produktion)        |
+| `docs/tmc2208_uart_test.md`   | UART produktionsguide + fejlsøgning          |
+| `docs/jumper_guide.md`        | PDN-EN på, 2×4 blok af                       |
 | `hardware/wiring_sensors.md`  | Komplet wiring guide med farver + test-cmds  |
 
 ---
@@ -79,8 +81,9 @@ S6 board USB-tilsluttet **Pi'en**, ikke NUC'en.
 
 - **Board**: FYSETC S6 v2.1 (STM32F446, 32KiB bootloader, USB PA11/PA12)
 - **Steppers**: `[manual_stepper feeder1]` E0 / `[manual_stepper feeder2]` E1
-- **UART**: Standalone (accepteret produktionsvalg)
-- **VREF**: E0 = 0.99V, E1 = 1.01V
+- **Drivere**: BTT TMC2208 V2 ×2, UART via `[tmc2208]` sektioner
+- **Jumpere**: PDN-EN **PÅ** per E0/E1; 2×4 blok **AF**
+- **Strøm**: `run_current: 0.650` A (justeres i config / `SET_TMC_CURRENT`)
 - **Pi hostname**: `pi3feeder` (192.168.50.14)
 - **Mainsail**: `http://pi3feeder.local/` (port 7125)
 
@@ -102,7 +105,8 @@ S6 board USB-tilsluttet **Pi'en**, ikke NUC'en.
 
 ## Session-noter
 
-- **7. juni 2026**: Projekt oprettet, repo bygget, S6 flashet, UART standalone accepteret
+- **7. juni 2026**: Projekt oprettet, repo bygget, S6 flashet
 - **8. juni 2026**: Sensor-arkitektur + config + wiring guide
-- **9. juni 2026**: Pi 3 (`pi3feeder`) MainsailOS host kørende; NUC parallel dual-Klipper udfaset; offline SD-deploy som sikker config-metode
-- **10. juni 2026**: 2× Redrex + 2× pancake NEMA17 købt; Y-splitter 4-port printet; 4× PC4-M6 + 2× 300 mm PTFE på lager
+- **9. juni 2026**: Pi 3 (`pi3feeder`) MainsailOS host kørende; NUC parallel dual-Klipper udfaset
+- **10. juni 2026**: TMC2209 standalone (VREF 0,99/1,01 V); E2 UART-test med TMC2208 V2 — succes
+- **11. juni 2026**: TMC2208 V2 monteret i E0+E1; UART produktion bekræftet fra Mainsail (`DUMP_TMC`, motor-test)

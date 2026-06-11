@@ -35,7 +35,7 @@ Tidligere plan (HANOV-print + POLISI gears) er erstattet — se [Alternativ](#al
 | Emne | Anbefaling |
 |------|------------|
 | **Moment** | Pancake har mindre moment end fuld-højde NEMA17 — OK til bowden-feeder, ikke til direkte hotend |
-| **VREF** | Start ved **0,85–1,0 V** på TMC2209 (standalone) og juster op hvis der slippes |
+| **Strøm** | `run_current: 0.65` A via TMC2208 UART — juster i `tmc2208_uart.cfg` hvis der slippes |
 | **Montering** | Tjek at D-fladen på akslen sidder korrekt i Redrex-klemmen før stramning |
 | **rotation_distance** | Skal kalibreres per feeder — startværdi `7.710` i `printer.cfg` er kun estimat |
 
@@ -79,7 +79,7 @@ Tidligere plan (HANOV-print + POLISI gears) er erstattet — se [Alternativ](#al
 | PC4-M6 bowden fitting | 4 | ✅ Har |
 | PTFE bowden 2,0 mm ID | 2× 300 mm | ✅ Har |
 | FYSETC S6 E0/E1 slots | 2 | ✅ Har |
-| TMC2209 v1.3 (standalone) | 2 | ✅ Har |
+| BTT TMC2208 V2 (UART, E0+E1) | 2 | ✅ Monteret |
 | BTT filament sensorer | 3+ | ✅ Har |
 | Raspberry Pi 3 (`pi3feeder`) | 1 | ✅ Kørende |
 
@@ -127,10 +127,11 @@ Tidligere plan (HANOV-print + POLISI gears) er erstattet — se [Alternativ](#al
 6. Kør `TEST_FEEDER1` / `TEST_FEEDER2` i Mainsail — se [`calibration.md`](calibration.md)
 7. Mål PTFE-længder → opdater `_FEEDER_VARS` (`retract_dist`, `load_dist`)
 
-### Strøm (TMC2209 standalone)
+### Strøm (TMC2208 UART)
 
-- PDN-EN jumper **AF** på begge E0/E1-drivere
-- VREF målt med multimeter — dokumentér i `delivery_summary.md` efter montage
+- PDN-EN jumper **PÅ** på begge E0/E1-drivere
+- Strøm i `klipper/tmc2208_uart.cfg` (`run_current: 0.650`) — juster i Mainsail med `SET_TMC_CURRENT`
+- Se `docs/tmc2208_uart_test.md` og `docs/calibration.md`
 
 ---
 

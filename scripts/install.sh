@@ -12,6 +12,7 @@ mkdir -p "${CONFIG}"
 cp "${SRC}/printer.cfg" "${CONFIG}/printer.cfg"
 cp "${SRC}/macros.cfg" "${CONFIG}/macros.cfg"
 cp "${SRC}/filament_sensor.cfg" "${CONFIG}/filament_sensor.cfg"
+cp "${SRC}/tmc2208_uart.cfg" "${CONFIG}/tmc2208_uart.cfg"
 
 echo "==> Opdater MCU serial (tilslut S6 via USB først)..."
 SERIAL="$(ls /dev/serial/by-id/usb-Klipper_* 2>/dev/null | head -1 || true)"
@@ -22,7 +23,7 @@ else
     echo "   ⚠️  S6 ikke fundet – ret serial manuelt i printer.cfg"
 fi
 
-for f in printer.cfg macros.cfg filament_sensor.cfg; do
+for f in printer.cfg macros.cfg filament_sensor.cfg tmc2208_uart.cfg; do
     [ -s "${CONFIG}/${f}" ] || { echo "❌ ${f} er tom!"; exit 1; }
 done
 

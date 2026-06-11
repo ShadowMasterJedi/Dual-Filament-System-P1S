@@ -1,69 +1,83 @@
 # FYSETC S6 v2.1 – Jumper-guide
 
-**Opdateret:** 7. juni 2026
+**Opdateret:** 11. juni 2026
 
 ---
 
-## Aktuel produktionsopsætning: STANDALONE
+## Aktuel produktionsopsætning: UART (TMC2208 V2)
 
-Dual Filament kører **uden UART**. Se **`standalone_guide.md`** for komplet opsætning.
+Dual Filament kører **UART** med **BTT TMC2208 V2** i E0+E1.  
+Se **`tmc2208_uart_test.md`** for config og test.
 
-**E0 + E1 (begge slots):**
+**E0 + E1 (begge feeder-slots):**
 
 | Jumper | Indstilling |
 |--------|-------------|
-| PDN-EN | **AF** |
-| 2×4 blok / UART1 | **AF** |
-| Alt andet | **AF** |
+| **PDN-EN** | **PÅ** |
+| 2×4 blok mellem headers | **AF** |
+| UART1 / øvrige | **AF** |
+| E2, Z, X, Y | **AF** |
 
-Config: `[tmc2209]` udkommenteret — strøm via **VREF** på driver.
+Config: `[include tmc2208_uart.cfg]` i `printer.cfg` — strøm via **`run_current`** i Klipper.
 
 ---
 
-## Reference: UART (fremtidig / fejlsøgning)
+## Driver-moduler
 
-Følgende blev testet uden succes med BTT TMC2209 V1.3:
+| Slot | Driver | UART |
+|------|--------|------|
+| E0 — Feeder 1 | BTT TMC2208 V2 | ✅ Bekræftet |
+| E1 — Feeder 2 | BTT TMC2208 V2 | ✅ Bekræftet |
 
-- PDN-EN på + række 1/2/3 i 2×4-blok
-- Kun PDN-EN på
-- Venstre/højre kolonne i pin-grid
-- E2-slot test (`uart_pin: PE0`) — samme `IFCNT`-fejl
+**Montering:** Varmesink opad, notch matcher boardets markering.
 
-Konklusion: sandsynligt driver- eller UART-hardwareproblem — ikke løst med jumper alene.
+**BTT TMC2208 V2:** Nogle moduler kræver **bridged UART-pads** på driver-printet (ved MS3/PDN_UART). Vores moduler virkede med kun PDN-EN på S6.
 
-### UART-jumpere (hvis I prøver igen)
+---
 
-Billeder og tegninger:
+## UART-pins og config
+
+| Feeder | Slot | `uart_pin` |
+|--------|------|------------|
+| Feeder 1 | E0 | `PA15` |
+| Feeder 2 | E1 | `PC5` |
+
+```cfg
+[tmc2208 manual_stepper feeder1]
+uart_pin: PA15
+run_current: 0.650
+hold_current: 0.400
+sense_resistor: 0.110
+
+[tmc2208 manual_stepper feeder2]
+uart_pin: PC5
+run_current: 0.650
+hold_current: 0.400
+sense_resistor: 0.110
+```
+
+UART OK = ingen `Unable to read tmc2208 ... register IFCNT` i `klippy.log`.
+
+---
+
+## Billeder og tegninger
 
 - `hardware/jumper-pdn-en-uart.jpg`
 - `hardware/jumper-btt-drivers-e0-e1.jpg`
 - `hardware/jumper-raekke3-guide.svg`
 - `hardware/jumper-tegning-dit-board.svg`
 - `hardware/jumper-overlay.html`
-- `images/TMC2209.JPG` (officiel BTT vs S6 pin 4)
 
-| Område | BTT TMC2209 UART |
-|--------|------------------|
-| PDN-EN (separat 2-pin) | **PÅ** |
-| 2×4 blok mellem headers | BTT: **række 3** (over begge kolonner) — eller UART1 nederste række venstre kolonne |
-| Række 1, 2, 4 | Tom |
+---
 
-FYSETC egne TMC2209 V3.1 kræver typisk **kun PDN-EN** — ingen ekstra JP6-jumper.
+## Arkiv: TMC2209 V1.3 (standalone — udfaset)
 
-### UART config (når det virker)
+BTT TMC2209 V1.3 UART blev testet uden succes:
 
-```cfg
-[tmc2209 manual_stepper feeder1]
-uart_pin: PA15
-run_current: 0.650
-sense_resistor: 0.110
+- PDN-EN på + række 1/2/3 i 2×4-blok
+- Kun PDN-EN på
+- E2-slot test (`uart_pin: PE0`) — samme `IFCNT`-fejl
 
-[tmc2209 manual_stepper feeder2]
-uart_pin: PC5
-run_current: 0.650
-sense_resistor: 0.110
-```
-
-UART OK = ingen `Unable to read tmc uart register IFCNT` i loggen.
+**Standalone-fallback** (alle jumpere AF, strøm via VREF): se `standalone_guide.md`.
 
 Officiel kilde: [FYSETC/FYSETC-S6](https://github.com/FYSETC/FYSETC-S6) · [Wiki](https://wiki.fysetc.com/FYSETC_S6/)

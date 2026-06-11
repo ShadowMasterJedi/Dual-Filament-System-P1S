@@ -11,7 +11,7 @@
 └─────────┴─────────┴─────────┘
 ```
 
-TMC2209 orientering: **varmesinke opad**, notch matcher boardets markering.
+TMC2208 V2 orientering: **varmesinke opad**, notch matcher boardets markering.
 
 ## Motor-tilslutning
 
@@ -26,7 +26,7 @@ TMC2209 orientering: **varmesinke opad**, notch matcher boardets markering.
 |------|------|
 | Aksel | 5 mm D-aksel — D-fladen skal flugte med Redrex set screw |
 | Moment | Pancake er svagere end fuld NEMA17 — feeder OK, ikke hotend |
-| VREF | Start 0,85–1,0 V (standalone TMC2209), juster ved slip |
+| Strøm | TMC2208 UART — `run_current` 0.65 A i config; PDN-EN jumper PÅ |
 | Bowden | PC4-M6 fra Redrex → Y-splitter → downstream sensor → P1S |
 
 ## Filament Sensorer
